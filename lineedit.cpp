@@ -129,29 +129,7 @@ int main(int argc, char* argv[]) {
         case '?': // help
             print_refresh(cmdwin, "?");
             clr_window(mainwin);
-            wmove(mainwin, 1, 0);
-                stream << " * Line Editor Help" << endl
-                       << " ----------------------------------------------------" << endl
-                       << "   A V A I L A B L E        C O M M A N D S" << endl
-                       << " ----------------------------------------------------" << endl
-                       << " l - display full file listing" << endl
-                       << " a - append text to the end of the file" << endl
-                       << " e - edit a specific line" << endl
-                       << " f - find text in file" << endl
-                       << " d - delete a specific line" << endl
-                       << " \\ - delete all lines (irreversible!)" << endl
-                       << " o - open another file (save the current one first!)" << endl
-                       << " w - write changes to file (save)" << endl
-                       << " r - write changes to another file (save as)" << endl
-                       << " x - write changes to file and exit" << endl
-                       << " q - exit without saving changes" << endl
-                       << " ? - display this page" << endl
-                       << " ----------------------------------------------------" << endl
-                       << " Line Editor v1.2 by RedCreator37" << endl
-                       << " WARNING: This program is distributed \"as is\" and" << endl
-                       << "          comes without warranty of any kind! You" << endl
-                       << "          are using it on your own risk!";
-            wprintw(mainwin, stream.str().c_str());
+            print_help(mainwin, 1, 0);
             box(mainwin, 0, 0);
             wrefresh(mainwin);
             break;

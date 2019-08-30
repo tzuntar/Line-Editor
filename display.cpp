@@ -65,6 +65,34 @@ void print_listing(WINDOW* window, std::vector<std::string>& lines) {
     }
 }
 
+/// Print the in-program help to the window on specified location
+void print_help(WINDOW* window, int y, int x) {
+    std::stringstream stream;
+    wmove(window, y, x);
+    stream << " * Line Editor Help" << std::endl
+           << " ----------------------------------------------------" << std::endl
+           << "   A V A I L A B L E        C O M M A N D S"           << std::endl
+           << " ----------------------------------------------------" << std::endl
+           << " l - display full file listing"                        << std::endl
+           << " a - append text to the end of the file"               << std::endl
+           << " e - edit a specific line"                             << std::endl
+           << " f - find text in file"                                << std::endl
+           << " d - delete a specific line"                           << std::endl
+           << " \\ - delete all lines (irreversible!)"                << std::endl
+           << " o - open another file (save the current one first!)"  << std::endl
+           << " w - write changes to file (save)"                     << std::endl
+           << " r - write changes to another file (save as)"          << std::endl
+           << " x - write changes to file and exit"                   << std::endl
+           << " q - exit without saving changes"                      << std::endl
+           << " ? - display this page"                                << std::endl
+           << " ----------------------------------------------------" << std::endl
+           << " Line Editor v1.2 by RedCreator37"                     << std::endl
+           << " WARNING: This program is distributed \"as is\" and"   << std::endl
+           << "          comes without warranty of any kind! You"     << std::endl
+           << "          are using it at your own risk!";
+    wprintw(window, stream.str().c_str());
+}
+
 /// Display the status bar on the screen
 void init_sbar(WINDOW* window, std::string filename) {
     std::stringstream statusbar;
