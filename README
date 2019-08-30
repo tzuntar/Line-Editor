@@ -1,0 +1,23 @@
+*** Line Editor README ***
+
+This folder contains the source code for a CLI text editor called
+Line Editor.
+
+REQUIREMENTS
+
+ - Working C++ compiler, preferably g++
+ - Makefile support
+ - Ncurses and its panels library
+
+COMPILING
+
+Use the supplied Makefile to compile the program against required
+libraries by executing the 'make' command (or 'make run' if you also
+want to run the program after compilation).
+
+BUGS
+
+ - The 'find' command is not working
+ - The third line of command window (used for displaying file status)
+   does not clean up previous output before writing new one
+ - There are some possible memory leaks
