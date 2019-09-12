@@ -1,5 +1,5 @@
 // Line Editor v1.2 by RedCreator37
-// ncurses-based verion
+// ncurses-based version
 // ------------------------------------
 // display.hpp - output management header
 // Thu 2019-07-25

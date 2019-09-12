@@ -21,6 +21,6 @@ namespace lineeditor {
     std::string filename;
 }
 
-void quick_listing(std::string fname);
+void quick_listing(const std::string& fname);
 
 #endif

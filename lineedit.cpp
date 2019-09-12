@@ -1,5 +1,5 @@
 // Line Editor v1.2 by RedCreator37
-// ncurses-based verion
+// ncurses-based version
 // ------------------------------------
 // lineedit.cpp - main program file
 // Thu 2019-07-25
@@ -23,9 +23,9 @@ int main(int argc, char* argv[]) {
     if (argc < 2) {
         cout << "* Enter filename: ";
         cin >> filename;
-    } else filename = argv[1];    
+    } else filename = argv[1];
 
-    if (filename == "") {
+    if (filename.empty()) {
         cout << endl
              << "* No file specified." << endl;
         return 1;
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     box(windows[0], 0, 0);
     box(windows[1], 0, 0);
 
-    // attact panels
+    // attach panels
     panels[0] = new_panel(windows[0]);
     panels[1] = new_panel(windows[1]);
     panels[2] = new_panel(windows[2]);
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
 
     // M A I N     C O M M A N D     L O O P
 
-    bool exit = false;
+    bool exit;
     WINDOW* mainwin = windows[0];
     WINDOW* cmdwin = windows[1];
     stringstream stream;
@@ -241,7 +241,7 @@ int main(int argc, char* argv[]) {
 
 /// Print out all the text in the file with line
 /// numbers on the left to std::cout
-void quick_listing(std::string fname) {
+void quick_listing(const std::string& fname) {
     std::vector<std::string> text;
     std::ifstream file(fname);
 
