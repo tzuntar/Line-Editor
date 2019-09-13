@@ -5,13 +5,14 @@
 // Thu 2019-07-25
 #include "lineedit.hpp"
 #include "editing.hpp"
+
 using namespace lineeditor;
 
-// Program entry point
-int main(int argc, char* argv[]) {
+/// Program entry point
+int main(int argc, char *argv[]) {
     using namespace std;
-    WINDOW* windows[3];
-    PANEL* panels[3];
+    WINDOW *windows[3];
+    PANEL *panels[3];
 
     // if the "list" option is specified just print the listing and quit
     if (argc == 3 && (strcmp(argv[2], "-l") == 0 || strcmp(argv[2], "--list") == 0)) {
@@ -29,7 +30,8 @@ int main(int argc, char* argv[]) {
         cout << endl
              << "* No file specified." << endl;
         return 1;
-    } else cout << endl
+    } else
+        cout << endl
              << "* Line Editor v1.0 by RedCreator37" << endl
              << "* Loading file " << filename << endl
              << endl;
@@ -65,14 +67,14 @@ int main(int argc, char* argv[]) {
     panels[2] = new_panel(windows[2]);
     update_panels();
 
-    init_sbar(windows[2], filename);
+    init_sbar(filename);
     print_listing(windows[0], lines);
 
     // M A I N     C O M M A N D     L O O P
 
     bool exit;
-    WINDOW* mainwin = windows[0];
-    WINDOW* cmdwin = windows[1];
+    WINDOW *mainwin = windows[0];
+    WINDOW *cmdwin = windows[1];
     stringstream stream;
 
     while (!exit) {
@@ -90,143 +92,143 @@ int main(int argc, char* argv[]) {
 
         // get input and process commands
         int ch = getch();
-        switch(ch) {
-        case 'l': // full listing of the file
-            print_refresh(cmdwin, "l");
-            print_listing(mainwin, lines);
-            break;
+        switch (ch) {
+            case 'l': // full listing of the file
+                print_refresh(cmdwin, "l");
+                print_listing(mainwin, lines);
+                break;
 
-        case 'a': // append to the end of the file
-            print_refresh(cmdwin, "a");
-            wmove(mainwin, 1, 1);
-            append_line(mainwin, lines);
-            break;
+            case 'a': // append to the end of the file
+                print_refresh(cmdwin, "a");
+                wmove(mainwin, 1, 1);
+                append_line(mainwin, lines);
+                break;
 
-        case 'e': // edit line
-            print_refresh(cmdwin, "e");
-            wmove(mainwin, 1, 1);
-            edit_line(mainwin, lines);
-            break;
+            case 'e': // edit line
+                print_refresh(cmdwin, "e");
+                wmove(mainwin, 1, 1);
+                edit_line(mainwin, lines);
+                break;
 
-        case 'f':   // find text
-            print_refresh(cmdwin, "f");
-            wmove(mainwin, 1, 1);
-            find_text(mainwin, lines);
-            break;
+            case 'f':   // find text
+                print_refresh(cmdwin, "f");
+                wmove(mainwin, 1, 1);
+                find_text(mainwin, lines);
+                break;
 
-        case 'd': // delete line
-            print_refresh(cmdwin, "d");
-            wmove(mainwin, 1, 1);
-            delete_line(mainwin, lines);
-            break;
+            case 'd': // delete line
+                print_refresh(cmdwin, "d");
+                wmove(mainwin, 1, 1);
+                delete_line(mainwin, lines);
+                break;
 
-        case '\\': // delete all lines
-            print_refresh(cmdwin, "\\");
-            wmove(mainwin, 1, 1);
-            delete_all(mainwin, lines);
-            break;
+            case '\\': // delete all lines
+                print_refresh(cmdwin, "\\");
+                wmove(mainwin, 1, 1);
+                delete_all(mainwin, lines);
+                break;
 
-        case '?': // help
-            print_refresh(cmdwin, "?");
-            clr_window(mainwin);
-            print_help(mainwin, 1, 0);
-            box(mainwin, 0, 0);
-            wrefresh(mainwin);
-            break;
+            case '?': // help
+                print_refresh(cmdwin, "?");
+                clr_window(mainwin);
+                print_help(mainwin, 1, 0);
+                box(mainwin, 0, 0);
+                wrefresh(mainwin);
+                break;
 
-        case 'o': { // open another file
-            char* newname = new char[256];
+            case 'o': { // open another file
+                char *newname = new char[256];
 
-            print_refresh(cmdwin, "o");
-            wmove(cmdwin, 3, 1);
-            wattron(cmdwin, A_BOLD);
-            wprintw(cmdwin, "* Enter file to open: ");
-            wmove(cmdwin, 3, 23);
-            echo();
-            wgetstr(cmdwin, newname);
-            noecho();
-            wattroff(cmdwin, A_BOLD);
+                print_refresh(cmdwin, "o");
+                wmove(cmdwin, 3, 1);
+                wattron(cmdwin, A_BOLD);
+                wprintw(cmdwin, "* Enter file to open: ");
+                wmove(cmdwin, 3, 23);
+                echo();
+                wgetstr(cmdwin, newname);
+                noecho();
+                wattroff(cmdwin, A_BOLD);
 
-            filename = newname;
-            delete[] newname;
-            lines = get_lines(filename);
-            init_sbar(cmdwin, filename);
-            print_listing(mainwin, lines);
-            break;
-        }
+                filename = newname;
+                delete[] newname;
+                lines = get_lines(filename);
+                init_sbar(filename);
+                print_listing(mainwin, lines);
+                break;
+            }
 
-        case 'w': // write file
-            print_refresh(cmdwin, "w");
-            wmove(cmdwin, 3, 1);
-            wprintw(cmdwin, "* Saving changes...");
-            wrefresh(cmdwin);
+            case 'w': // write file
+                print_refresh(cmdwin, "w");
+                wmove(cmdwin, 3, 1);
+                wprintw(cmdwin, "* Saving changes...");
+                wrefresh(cmdwin);
 
-            save_lines(lines, filename);
+                save_lines(lines, filename);
 
-            // update command window status
-            wmove(cmdwin, 3, 1);
-            wattrset(cmdwin, COLOR_PAIR(2));
-            wattron(cmdwin, A_BOLD);
-            stream << "* Saved to file " << filename;
-            for (int i = 0; i < filename.length() + 2; ++i)
-                stream << " ";
-            wprintw(cmdwin, stream.str().c_str());
-            wattroff(cmdwin, A_BOLD);
-            wrefresh(mainwin);
-            break;
+                // update command window status
+                wmove(cmdwin, 3, 1);
+                wattrset(cmdwin, COLOR_PAIR(2));
+                wattron(cmdwin, A_BOLD);
+                stream << "* Saved to file " << filename;
+                for (int i = 0; i < filename.length() + 2; ++i)
+                    stream << " ";
+                wprintw(cmdwin, stream.str().c_str());
+                wattroff(cmdwin, A_BOLD);
+                wrefresh(mainwin);
+                break;
 
-        case 'r': { // write to another file
-            char* newname = new char[256];
+            case 'r': { // write to another file
+                char *newname = new char[256];
 
-            print_refresh(cmdwin, "r");
-            wmove(cmdwin, 3, 1);
-            wattron(cmdwin, A_BOLD);
-            wprintw(cmdwin, "* Enter new filename: ");
-            wmove(cmdwin, 3, 23);
-            echo();
-            wgetstr(cmdwin, newname);
-            noecho();
-            wattroff(cmdwin, A_BOLD);
+                print_refresh(cmdwin, "r");
+                wmove(cmdwin, 3, 1);
+                wattron(cmdwin, A_BOLD);
+                wprintw(cmdwin, "* Enter new filename: ");
+                wmove(cmdwin, 3, 23);
+                echo();
+                wgetstr(cmdwin, newname);
+                noecho();
+                wattroff(cmdwin, A_BOLD);
 
-            filename = newname;
+                filename = newname;
 
-            // save text to the specified file
-            wmove(cmdwin, 3, 1);
-            wprintw(cmdwin, "* Saving the text...");
-            wrefresh(cmdwin);
+                // save text to the specified file
+                wmove(cmdwin, 3, 1);
+                wprintw(cmdwin, "* Saving the text...");
+                wrefresh(cmdwin);
 
-            save_lines(lines, filename);
+                save_lines(lines, filename);
 
-            // update command window status
-            wmove(cmdwin, 3, 1);
-            wattrset(cmdwin, COLOR_PAIR(2));
-            wattron(cmdwin, A_BOLD);
-            stream << "* Saved to file " << filename;
-            for (int i = 0; i < filename.length() + 2; ++i)
-                stream << " ";
-            wprintw(cmdwin, stream.str().c_str());
-            wattroff(cmdwin, A_BOLD);
-            init_sbar(cmdwin, filename);
-            wrefresh(mainwin);
+                // update command window status
+                wmove(cmdwin, 3, 1);
+                wattrset(cmdwin, COLOR_PAIR(2));
+                wattron(cmdwin, A_BOLD);
+                stream << "* Saved to file " << filename;
+                for (int i = 0; i < filename.length() + 2; ++i)
+                    stream << " ";
+                wprintw(cmdwin, stream.str().c_str());
+                wattroff(cmdwin, A_BOLD);
+                init_sbar(filename);
+                wrefresh(mainwin);
 
-            delete[] newname;
-            break;
-        }
+                delete[] newname;
+                break;
+            }
 
-        case 'x': // write file and exit
-            print_refresh(cmdwin, "x");
-            wmove(cmdwin, 3, 1);
-            wprintw(cmdwin, "* Saving changes...");
-            wrefresh(cmdwin);
+            case 'x': // write file and exit
+                print_refresh(cmdwin, "x");
+                wmove(cmdwin, 3, 1);
+                wprintw(cmdwin, "* Saving changes...");
+                wrefresh(cmdwin);
 
-            save_lines(lines, filename);
-            exit = true;
-            break;
+                save_lines(lines, filename);
+                exit = true;
+                break;
 
-        case 'q': // exit without saving
-            print_refresh(cmdwin, "q");
-            exit = true;
-            break;
+            case 'q': // exit without saving
+                print_refresh(cmdwin, "q");
+                exit = true;
+                break;
         }
     }
 
@@ -241,7 +243,7 @@ int main(int argc, char* argv[]) {
 
 /// Print out all the text in the file with line
 /// numbers on the left to std::cout
-void quick_listing(const std::string& fname) {
+void quick_listing(const std::string &fname) {
     std::vector<std::string> text;
     std::ifstream file(fname);
 

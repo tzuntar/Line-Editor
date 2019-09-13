@@ -1,7 +1,7 @@
 // Line Editor v1.2 by RedCreator37
-// ncurses-based verion
+// ncurses-based version
 // ------------------------------------
-// lineedit.hpp - main headerfile
+// lineedit.hpp - main header file
 // Thu 2019-07-25
 #ifndef lineedit_hpp
 #define lineedit_hpp
@@ -21,6 +21,6 @@ namespace lineeditor {
     std::string filename;
 }
 
-void quick_listing(const std::string& fname);
+void quick_listing(const std::string &fname);
 
 #endif
