@@ -1,5 +1,5 @@
 // Line Editor v1.2 by RedCreator37
-// ncurses-based verion
+// ncurses-based version
 // ------------------------------------
 // editing.cpp - editor routines
 // Thu 2019-07-25
@@ -34,7 +34,7 @@ void append_line(WINDOW* window, std::vector<std::string>& textlines) {
     noecho();
 
     // finish up
-    textlines.push_back(text);
+    textlines.emplace_back(text);
     delete[] text;
 }
 
@@ -103,7 +103,7 @@ void delete_line(WINDOW* window, std::vector<std::string>& textlines) {
     textlines.erase(textlines.begin() + (num - 1));
 
     // don't return an empty vector
-    if (textlines.size() < 1) textlines.push_back("");
+    if (textlines.empty()) textlines.emplace_back("");
     delete[] linenum;
 }
 
@@ -135,7 +135,7 @@ void delete_all(WINDOW* window, std::vector<std::string>& textlines) {
     // clear the array if the user has entered yes
     if (tolower(choice) == 'y') {
         textlines.clear();
-        textlines.push_back("");
+        textlines.emplace_back("");
     }
 }
 
@@ -165,11 +165,11 @@ void find_text(WINDOW* window, std::vector<std::string>& textlines) {
 }
 
 /// Get lines from a text file
-std::vector<std::string> get_lines(std::string currentfname) {
+std::vector<std::string> get_lines(const std::string &current_fname) {
     using namespace std;
     vector<string> contents;
 
-    ifstream file(currentfname);
+    ifstream file(current_fname);
     if (file.is_open()) { // get the lines
         string line;
         while (getline(file, line)) contents.push_back(line);
@@ -177,18 +177,18 @@ std::vector<std::string> get_lines(std::string currentfname) {
     }
 
     // add an empty line to avoid a segfault on empty files
-    if (contents.size() < 1) contents.push_back("");
+    if (contents.empty()) contents.emplace_back("");
     return contents;
 }
 
 /// Save lines to the file
-int save_lines(std::vector<std::string> textlines, std::string currentfname) {
+int save_lines(const std::vector<std::string> &textlines, const std::string &current_fname) {
     using namespace std;
-    ofstream file(currentfname);
+    ofstream file(current_fname);
 
     if (file.is_open()) {
-        for (int i = 0; i < textlines.size(); ++i)
-            file << textlines[i] << endl;
+        for (const auto &line : textlines)
+            file << line << endl;
         file.close();
     }
 
