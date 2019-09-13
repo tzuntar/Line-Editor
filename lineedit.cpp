@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    // normal start
+    // normal entry point
     if (argc < 2) {
         cout << "* Enter filename: ";
         cin >> filename;
@@ -170,8 +170,7 @@ int main(int argc, char *argv[]) {
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
                 stream << "* Saved to file " << filename;
-                for (int i = 0; i < filename.length() + 2; ++i)
-                    stream << " ";
+                for (int i = 0; i < filename.length() + 2; ++i) stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
                 wrefresh(mainwin);
@@ -204,8 +203,7 @@ int main(int argc, char *argv[]) {
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
                 stream << "* Saved to file " << filename;
-                for (int i = 0; i < filename.length() + 2; ++i)
-                    stream << " ";
+                for (int i = 0; i < filename.length() + 2; ++i) stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
                 init_sbar(filename);

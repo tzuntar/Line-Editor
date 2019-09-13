@@ -6,10 +6,10 @@
 #include "editing.hpp"
 
 /// Append a line to the end of the file
-void append_line(WINDOW* window, std::vector<std::string>& textlines) {
+void append_line(WINDOW *window, std::vector<std::string> &textlines) {
     using namespace std;
     stringstream output;
-    char* text = new char[2048];
+    char *text = new char[2048];
     int num = textlines.size() + 1;
 
     // print the prompt and last line
@@ -39,10 +39,10 @@ void append_line(WINDOW* window, std::vector<std::string>& textlines) {
 }
 
 /// Edit a specific line
-void edit_line(WINDOW* window, std::vector<std::string>& textlines) {
+void edit_line(WINDOW *window, std::vector<std::string> &textlines) {
     using namespace std;
-    char* linenum = new char[10];
-    char* text = new char[2048];
+    char *linenum = new char[10];
+    char *text = new char[2048];
     stringstream output;
 
     // print the first prompt
@@ -82,11 +82,10 @@ void edit_line(WINDOW* window, std::vector<std::string>& textlines) {
 }
 
 /// Delete a specified line
-void delete_line(WINDOW* window, std::vector<std::string>& textlines) {
+void delete_line(WINDOW *window, std::vector<std::string> &textlines) {
     using namespace std;
-    char* linenum = new char[10];
+    char *linenum = new char[10];
 
-    // print the prompt
     clr_window(window);
     wmove(window, 1, 0);
     print_wb(window, " * Enter line number: ");
@@ -108,7 +107,7 @@ void delete_line(WINDOW* window, std::vector<std::string>& textlines) {
 }
 
 /// Delete all lines
-void delete_all(WINDOW* window, std::vector<std::string>& textlines) {
+void delete_all(WINDOW *window, std::vector<std::string> &textlines) {
     using namespace std;
     stringstream output;
 
@@ -132,7 +131,7 @@ void delete_all(WINDOW* window, std::vector<std::string>& textlines) {
     char choice = wgetch(window);
     noecho();
 
-    // clear the array if the user has entered yes
+    // clear the array if confirmed
     if (tolower(choice) == 'y') {
         textlines.clear();
         textlines.emplace_back("");
@@ -141,10 +140,8 @@ void delete_all(WINDOW* window, std::vector<std::string>& textlines) {
 
 /// Find a string in the file
 /// TODO: not working properly
-void find_text(WINDOW* window, std::vector<std::string>& textlines) {
-    char* text = new char[1024];
-
-    // print the prompt
+void find_text(WINDOW *window, std::vector<std::string> &textlines) {
+    char *text = new char[1024];
     clr_window(window);
     wmove(window, 1, 0);
     print_wb(window, " * Enter the text to look for: ");
@@ -203,7 +200,7 @@ int save_lines(const std::vector<std::string> &textlines, const std::string &cur
 /// Parameters: char* string, WINDOW* window to print the possible
 /// errors on; int y and x - coords of the message on the screen;
 /// int max - the number of lines
-int string_lnum(char* string, WINDOW* window, int y, int x, int max) {
+int string_lnum(char *string, WINDOW *window, int y, int x, int max) {
     std::stringstream intstream(string);
     int num;
     intstream >> num;
