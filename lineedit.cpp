@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
         wprintw(cmdwin, "> ");
         wrefresh(cmdwin);
 
-        // reset the stringstream
+        // reset the string stream
         stream.str("");
 
         // get input and process commands
