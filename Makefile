@@ -1,5 +1,6 @@
 # Line Editor Makefile
 CXX         := g++
+CXXFLAGS    := -std=c++11 -Wall
 LDFLAGS     := -lpanel -lncurses
 RM          := rm -rf
 PROGRAMNAME := editor

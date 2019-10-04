@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
 
     // M A I N     C O M M A N D     L O O P
 
-    bool exit;
+    bool exit = false;
     WINDOW *mainwin = windows[0];
     WINDOW *cmdwin = windows[1];
     stringstream stream;
