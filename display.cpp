@@ -97,8 +97,7 @@ void print_help(WINDOW *window, int y, int x) {
 void init_sbar(const std::string &filename) {
     std::stringstream statusbar;
     std::string text = "Line Editor v1.2 by RedCreator37";
-    int offset = text.length() + 6 + filename.length()
-                 + statusbar.str().length();
+    int offset = text.length() + 6 + filename.length() + statusbar.str().length();
 
     statusbar << "File: " << filename;
     attron(A_BOLD | COLOR_PAIR(3));
