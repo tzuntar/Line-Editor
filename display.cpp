@@ -79,7 +79,7 @@ void print_help(WINDOW *window, int y, int x) {
            << " f - find text in file" << std::endl
            << " d - delete a specific line" << std::endl
            << " \\ - delete all lines (irreversible!)" << std::endl
-           << " o - open another file (save the current one first!)" << std::endl
+           << " o - open another file (discards current changes)" << std::endl
            << " w - write changes to file (save)" << std::endl
            << " r - write changes to another file (save as)" << std::endl
            << " x - write changes to file and exit" << std::endl
