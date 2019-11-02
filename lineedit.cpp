@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
         return 1;
     } else {
         cout << endl
-             << "* Line Editor v1.0 by RedCreator37" << endl
+             << "* Line Editor v1.2 by RedCreator37" << endl
              << "* Loading file " << filename << endl << endl;
     }
 
