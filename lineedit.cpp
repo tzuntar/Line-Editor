@@ -29,10 +29,11 @@ int main(int argc, char *argv[]) {
     if (filename.empty()) {
         cout << endl << "* No file specified." << endl;
         return 1;
-    } else
+    } else {
         cout << endl
              << "* Line Editor v1.0 by RedCreator37" << endl
              << "* Loading file " << filename << endl << endl;
+    }
 
     lines = get_lines(filename);
 
