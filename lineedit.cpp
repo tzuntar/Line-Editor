@@ -246,8 +246,7 @@ void quick_listing(const std::string &fname) {
 
     if (file.is_open()) { // get the text
         std::string line;
-        while (getline(file, line))
-            text.push_back(line);
+        while (getline(file, line)) text.push_back(line);
         file.close();
     }
 
