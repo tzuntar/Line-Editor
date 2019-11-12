@@ -14,6 +14,7 @@
 
 // functions
 void clr_window(WINDOW *window);
+void clr_line(WINDOW *window);
 void print_wb(WINDOW *window, const char *text);
 void print_refresh(WINDOW *window, const char *text);
 void print_error(WINDOW *window, const char *text, int y, int x);

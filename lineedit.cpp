@@ -139,6 +139,12 @@ int main(int argc, char *argv[]) {
                 char *newname = new char[256];
 
                 print_refresh(cmdwin, "o");
+
+                // clear any possible text on that line
+                wmove(cmdwin, 3, 1);
+                clr_line(cmdwin);
+
+                // now print the prompt
                 wmove(cmdwin, 3, 1);
                 wattron(cmdwin, A_BOLD);
                 wprintw(cmdwin, "* Enter file to open: ");
@@ -159,12 +165,16 @@ int main(int argc, char *argv[]) {
             case 'w': // write file
                 print_refresh(cmdwin, "w");
                 wmove(cmdwin, 3, 1);
+                clr_line(cmdwin);
+                wmove(cmdwin, 3, 1);
                 wprintw(cmdwin, "* Saving changes...");
                 wrefresh(cmdwin);
 
                 save_lines(lines, filename);
 
                 // update command window status
+                wmove(cmdwin, 3, 1);
+                clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
@@ -180,6 +190,8 @@ int main(int argc, char *argv[]) {
 
                 print_refresh(cmdwin, "r");
                 wmove(cmdwin, 3, 1);
+                clr_line(cmdwin);
+                wmove(cmdwin, 3, 1);
                 wattron(cmdwin, A_BOLD);
                 wprintw(cmdwin, "* Enter new filename: ");
                 wmove(cmdwin, 3, 23);
@@ -192,12 +204,16 @@ int main(int argc, char *argv[]) {
 
                 // save text to the specified file
                 wmove(cmdwin, 3, 1);
+                clr_line(cmdwin);
+                wmove(cmdwin, 3, 1);
                 wprintw(cmdwin, "* Saving the text...");
                 wrefresh(cmdwin);
 
                 save_lines(lines, filename);
 
                 // update command window status
+                wmove(cmdwin, 3, 1);
+                clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
@@ -214,6 +230,8 @@ int main(int argc, char *argv[]) {
 
             case 'x': // write file and exit
                 print_refresh(cmdwin, "x");
+                wmove(cmdwin, 3, 1);
+                clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
                 wprintw(cmdwin, "* Saving changes...");
                 wrefresh(cmdwin);

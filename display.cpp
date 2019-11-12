@@ -12,6 +12,12 @@ void clr_window(WINDOW *window) {
     wrefresh(window);
 }
 
+// clear any previous text on the line (with -2 offset)
+void clr_line(WINDOW *window) {
+    for (int i = 0; i < COLS - 2; i++) wprintw(window, " ");
+    wrefresh(window);
+}
+
 /// Print the text to a window and redraw its border
 void print_wb(WINDOW *window, const char *text) {
     wprintw(window, text);
