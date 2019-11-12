@@ -18,6 +18,4 @@ want to run the program after compilation).
 BUGS
 
  - The 'find' command is not working
- - The third line of command window (used for displaying file status)
-   does not clean up previous output before writing new one
  - There are some possible memory leaks
