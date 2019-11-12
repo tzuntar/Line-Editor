@@ -14,8 +14,7 @@ void append_line(WINDOW *window, std::vector<std::string> &textlines) {
 
     // print the prompt and last line
     clr_window(window);
-    output << endl
-           << " * Enter text to append:" << endl
+    output << endl << " * Enter text to append:" << endl
            << " [" << num - 1 << "] " << textlines[num - 2] << endl;
     wmove(window, 0, 0);
     print_wb(window, output.str().c_str());
