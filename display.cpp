@@ -46,7 +46,7 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines) {
     int loc = 1;
 
     clr_window(window);
-    for (int i = 0; i < lines.size(); ++i) {
+    for (unsigned int i = 0; i < lines.size(); ++i) {
         if (loc == LINES - 8) {   // we are at the end of the screen
             attron(A_REVERSE | COLOR_PAIR(1));
             mvprintw(LINES - 8, 1, "> Press any key <");
@@ -103,14 +103,14 @@ void print_help(WINDOW *window, int y, int x) {
 void init_sbar(const std::string &filename) {
     std::stringstream statusbar;
     std::string text = "Line Editor v1.2 by RedCreator37";
-    int offset = text.length() + 6 + filename.length() + statusbar.str().length();
+    unsigned int offset = text.length() + 6 + filename.length() + statusbar.str().length();
 
     statusbar << "File: " << filename;
     attron(A_BOLD | COLOR_PAIR(3));
     mvprintw(LINES - 1, 0, statusbar.str().c_str());
 
     // fill the status bar with spaces to make it fully colored
-    for (int i = 0; i < COLS - offset; ++i) printw(" ");
+    for (unsigned int i = 0; i < COLS - offset; ++i) printw(" ");
     printw(text.c_str());
     attroff(A_BOLD | COLOR_PAIR(3));
 }

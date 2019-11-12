@@ -179,7 +179,7 @@ int main(int argc, char *argv[]) {
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
                 stream << "* Saved to file " << filename;
-                for (int i = 0; i < filename.length() + 2; ++i) stream << " ";
+                for (unsigned int i = 0; i < filename.length() + 2; ++i) stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
                 wrefresh(mainwin);
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
                 stream << "* Saved to file " << filename;
-                for (int i = 0; i < filename.length() + 2; ++i) stream << " ";
+                for (unsigned int i = 0; i < filename.length() + 2; ++i) stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
                 init_sbar(filename);
@@ -257,7 +257,7 @@ int main(int argc, char *argv[]) {
 }
 
 /// Print out all the text in the file with line
-/// numbers on the left to std::cout
+/// numbers on the left to standard output
 void quick_listing(const std::string &fname) {
     std::vector<std::string> text;
     std::ifstream file(fname);
@@ -268,6 +268,6 @@ void quick_listing(const std::string &fname) {
         file.close();
     }
 
-    for (int i = 0; i < text.size(); ++i)
+    for (unsigned int i = 0; i < text.size(); ++i)
         std::cout << "[" << i + 1 << "] " << text[i] << std::endl;
 }

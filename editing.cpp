@@ -10,7 +10,7 @@ void append_line(WINDOW *window, std::vector<std::string> &textlines) {
     using namespace std;
     stringstream output;
     char *text = new char[2048];
-    int num = textlines.size() + 1;
+    unsigned int num = textlines.size() + 1;
 
     // print the prompt and last line
     clr_window(window);
