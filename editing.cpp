@@ -127,7 +127,7 @@ void delete_all(WINDOW *window, std::vector<std::string> &textlines) {
 
     // get the input
     echo();
-    char choice = wgetch(window);
+    unsigned char choice = wgetch(window);
     noecho();
 
     // clear the array if confirmed
