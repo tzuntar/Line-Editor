@@ -267,6 +267,6 @@ void quick_listing(const std::string &fname) {
         file.close();
     }
 
-    for (unsigned int i = 0; i < text.size(); ++i)
+    for (unsigned long i = 0; i < text.size(); ++i)
         std::cout << "[" << i + 1 << "] " << text[i] << std::endl;
 }
