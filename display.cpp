@@ -46,7 +46,7 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines) {
     int loc = 1;
 
     clr_window(window);
-    for (unsigned int i = 0; i < lines.size(); ++i) {
+    for (unsigned long i = 0; i < lines.size(); ++i) {
         if (loc == LINES - 8) {   // we are at the end of the screen
             attron(A_REVERSE | COLOR_PAIR(1));
             mvprintw(LINES - 8, 1, "> Press any key <");
