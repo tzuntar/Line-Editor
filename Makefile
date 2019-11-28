@@ -3,7 +3,7 @@ CXX         := g++
 CXXFLAGS    := -std=c++11 -Wall
 LDFLAGS     := -lpanel -lncurses
 RM          := rm -rf
-PROGRAMNAME := editor
+PROGRAMNAME := lineedit
 SOURCES     := editing.cpp display.cpp lineedit.cpp
 OBJECTS     := $(patsubst %.cpp, %.o, $(SOURCES))
 
@@ -16,8 +16,8 @@ $(PROGRAMNAME): $(OBJECTS)
 	@echo "Done. Run the program with ./$(PROGRAMNAME)"
 
 clean:
-	-@$(RM) $(OBJECTS)
-	-@$(RM) $(PROGRAMNAME)
+	-$(RM) $(OBJECTS)
+	-$(RM) $(PROGRAMNAME)
 	@echo "Done."
 
 run: $(PROGRAMNAME)
