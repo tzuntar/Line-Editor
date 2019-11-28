@@ -7,15 +7,14 @@
 
 /// Append a line to the end of the file
 void append_line(WINDOW *window, std::vector<std::string> &textlines) {
-    using namespace std;
-    stringstream output;
+    std::stringstream output;
     char *text = new char[2048];
     unsigned int num = textlines.size() + 1;
 
     // print the prompt and last line
     clr_window(window);
-    output << endl << " * Enter text to append:" << endl
-           << " [" << num - 1 << "] " << textlines[num - 2] << endl;
+    output << std::endl << " * Enter text to append:" << std::endl
+           << " [" << num - 1 << "] " << textlines[num - 2] << std::endl;
     wmove(window, 0, 0);
     print_wb(window, output.str().c_str());
     output.str("");
@@ -27,8 +26,7 @@ void append_line(WINDOW *window, std::vector<std::string> &textlines) {
 
     // get the input
     echo();
-    int offset = output.str().length();
-    wmove(window, 3, offset);
+    wmove(window, 3, output.str().length());
     wgetstr(window, text);
     noecho();
 
@@ -39,10 +37,8 @@ void append_line(WINDOW *window, std::vector<std::string> &textlines) {
 
 /// Edit a specific line
 void edit_line(WINDOW *window, std::vector<std::string> &textlines) {
-    using namespace std;
-    char *linenum = new char[10];
-    char *text = new char[2048];
-    stringstream output;
+    char *linenum = new char[10], *text = new char[2048];
+    std::stringstream output;
 
     // print the first prompt
     clr_window(window);
@@ -59,16 +55,15 @@ void edit_line(WINDOW *window, std::vector<std::string> &textlines) {
     if (num > 0) {
         // print the second prompt and current text in the specified line
         output.str("");
-        output << " * Enter the text (1 line!):" << endl
-               << "   [" << linenum << "] " << textlines[num - 1] << endl;
+        output << " * Enter the text (1 line!):" << std::endl
+               << "   [" << linenum << "] " << textlines[num - 1] << std::endl;
         print_wb(window, output.str().c_str());
         output.str("");
 
         // print the input prompt and get the text
         output << "   [" << linenum << "] ";
-        int offset = output.str().length();
         print_wb(window, output.str().c_str());
-        wmove(window, 4, offset);
+        wmove(window, 4, output.str().length());
         wgetstr(window, text);
         noecho();
 
@@ -82,9 +77,7 @@ void edit_line(WINDOW *window, std::vector<std::string> &textlines) {
 
 /// Delete a specified line
 void delete_line(WINDOW *window, std::vector<std::string> &textlines) {
-    using namespace std;
     char *linenum = new char[10];
-
     clr_window(window);
     wmove(window, 1, 0);
     print_wb(window, " * Enter line number: ");
@@ -107,8 +100,7 @@ void delete_line(WINDOW *window, std::vector<std::string> &textlines) {
 
 /// Delete all lines
 void delete_all(WINDOW *window, std::vector<std::string> &textlines) {
-    using namespace std;
-    stringstream output;
+    std::stringstream output;
 
     // print the message with a blinking "Warning" text
     // (hence all these cursor position calls)
@@ -120,7 +112,7 @@ void delete_all(WINDOW *window, std::vector<std::string> &textlines) {
     print_wb(window, "WARNING:");
     wattroff(window, A_BLINK);
     wmove(window, 1, 11);
-    output << " this will delete ALL lines in the current file!" << endl
+    output << " this will delete ALL lines in the current file!" << std::endl
            << " * This operation is irreversible! Enter [Y]es/[N]o: ";
     print_wb(window, output.str().c_str());
     wmove(window, 2, 53);
@@ -162,12 +154,11 @@ void find_text(WINDOW *window, std::vector<std::string> &textlines) {
 
 /// Get lines from a text file
 std::vector<std::string> get_lines(const std::string &current_fname) {
-    using namespace std;
-    vector<string> contents;
+    std::vector<std::string> contents;
 
-    ifstream file(current_fname);
+    std::ifstream file(current_fname);
     if (file.is_open()) { // get the lines
-        string line;
+        std::string line;
         while (getline(file, line)) contents.push_back(line);
         file.close();
     }
@@ -179,12 +170,11 @@ std::vector<std::string> get_lines(const std::string &current_fname) {
 
 /// Save lines to the file
 int save_lines(const std::vector<std::string> &textlines, const std::string &current_fname) {
-    using namespace std;
-    ofstream file(current_fname);
+    std::ofstream file(current_fname);
 
     if (file.is_open()) {
         for (const auto &line : textlines)
-            file << line << endl;
+            file << line << std::endl;
         file.close();
     }
 
@@ -196,13 +186,16 @@ int save_lines(const std::vector<std::string> &textlines, const std::string &cur
 /// Try to convert a string to a line number (a positive integer).
 /// Print out an error if the conversion fails or the number isn't
 /// a valid line number.
-/// Parameters: char* string, WINDOW* window to print the possible
-/// errors on; int y and x - coords of the message on the screen;
-/// int max - the number of lines
+/// Parameters:
+///     char*    the string
+///     WINDOW*  window to print the errors to
+///     int x, y error message coordinates
+///     int max  the number of lines
 int string_lnum(char *string, WINDOW *window, int y, int x, int max) {
     std::stringstream intstream(string);
     int num;
     intstream >> num;
+
     if (intstream.fail() || num < 1 || num > max) {
         print_error(window, "* ERROR: invalid line number.", y, x + 1);
         return -1;

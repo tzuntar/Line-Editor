@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
 
     lines = get_lines(filename);
 
-    // I N I T I A L I Z A T I O N
+    /// INITIALIZATION //////////////////////////////////////////////////////////////////
 
     // initialize ncurses
     initscr();
@@ -68,11 +68,10 @@ int main(int argc, char *argv[]) {
     init_sbar(filename);
     print_listing(windows[0], lines);
 
-    // M A I N     C O M M A N D     L O O P
+    /// MAIN COMMAND LOOP ///////////////////////////////////////////////////////////////
 
     bool exit = false;
-    WINDOW *mainwin = windows[0];
-    WINDOW *cmdwin = windows[1];
+    WINDOW *mainwin = windows[0], *cmdwin = windows[1];
     stringstream stream;
 
     while (!exit) {
@@ -89,55 +88,44 @@ int main(int argc, char *argv[]) {
         stream.str("");
 
         // get input and process commands
-        int ch = getch();
+        char ch = getch();
+        print_refresh(cmdwin, &ch);
+        wmove(mainwin, 1, 1);
+
         switch (ch) {
             case 'l': // full listing of the file
-                print_refresh(cmdwin, "l");
                 print_listing(mainwin, lines);
                 break;
 
             case 'a': // append to the end of the file
-                print_refresh(cmdwin, "a");
-                wmove(mainwin, 1, 1);
                 append_line(mainwin, lines);
                 break;
 
-            case 'e': // edit line
-                print_refresh(cmdwin, "e");
-                wmove(mainwin, 1, 1);
+            case 'e': // edit a line
                 edit_line(mainwin, lines);
                 break;
 
-            case 'f':   // find text
-                print_refresh(cmdwin, "f");
-                wmove(mainwin, 1, 1);
+            case 'f': // find text in file
                 find_text(mainwin, lines);
                 break;
 
-            case 'd': // delete line
-                print_refresh(cmdwin, "d");
-                wmove(mainwin, 1, 1);
+            case 'd': // delete a line
                 delete_line(mainwin, lines);
                 break;
 
             case '\\': // delete all lines
-                print_refresh(cmdwin, "\\");
-                wmove(mainwin, 1, 1);
                 delete_all(mainwin, lines);
                 break;
 
-            case '?': // help
-                print_refresh(cmdwin, "?");
+            case '?': // display help
                 clr_window(mainwin);
                 print_help(mainwin, 1, 0);
                 box(mainwin, 0, 0);
                 wrefresh(mainwin);
                 break;
 
-            case 'o': { // open another file
+            case 'o': { // open a file
                 char *newname = new char[256];
-
-                print_refresh(cmdwin, "o");
 
                 // clear any possible text on that line
                 wmove(cmdwin, 3, 1);
@@ -161,8 +149,7 @@ int main(int argc, char *argv[]) {
                 break;
             }
 
-            case 'w': // write file
-                print_refresh(cmdwin, "w");
+            case 'w': // save the text to a file
                 wmove(cmdwin, 3, 1);
                 clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
@@ -184,10 +171,9 @@ int main(int argc, char *argv[]) {
                 wrefresh(mainwin);
                 break;
 
-            case 'r': { // write to another file
+            case 'r': { // save to another file
                 char *newname = new char[256];
 
-                print_refresh(cmdwin, "r");
                 wmove(cmdwin, 3, 1);
                 clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
@@ -227,8 +213,7 @@ int main(int argc, char *argv[]) {
                 break;
             }
 
-            case 'x': // write file and exit
-                print_refresh(cmdwin, "x");
+            case 'x': // save the file and exit
                 wmove(cmdwin, 3, 1);
                 clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
@@ -240,7 +225,6 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 'q': // exit without saving
-                print_refresh(cmdwin, "q");
                 exit = true;
                 break;
         }
@@ -255,8 +239,8 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-/// Print out all the text in the file with line
-/// numbers on the left to standard output
+/// Print all the text in the file with line numbers at the left
+/// to the standard output
 void quick_listing(const std::string &fname) {
     std::vector<std::string> text;
     std::ifstream file(fname);
