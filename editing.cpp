@@ -89,7 +89,7 @@ void delete_line(WINDOW *window, std::vector<std::string> &textlines) {
     noecho();
 
     // do the processing
-    int num = string_lnum(linenum, window, 3, 0, textlines.size());
+    unsigned int num = string_lnum(linenum, window, 3, 0, textlines.size());
     if (num > textlines.size()) return; // safety check to avoid segfaults
     textlines.erase(textlines.begin() + (num - 1));
 
