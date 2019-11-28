@@ -1,14 +1,14 @@
 .\" Line Editor manpage
-.\" (feel free to improve it if you have some free time)
-.TH lineeditor 1 "2019-07-25" "1.2" "Line Editor Manual"
+.\" (feel free to improve it if you have some time)
+.TH lineedit 1 "2019-07-25" "1.2" "Line Editor Manual"
 .SH NAME
-lineeditor \- edit text files, one line at the time
+lineedit \- edit text files, one line at the time
 .SH SYNOPSIS
 .B lineedit
 .IR [filename]
 .IR [-l|--list]
 .SH DESCRIPTION
-.B Lineeditor
+.B Lineedit
 is a simple terminal-based text editor (using the `curses' library) which is
 designed to edit one line at the time. When the program is run, the specified
 file is read and listed (you can create new files by supplying a new filename).
@@ -41,6 +41,4 @@ line numbers at the left (similar to the internal
 l
 command) and quit.
 .SH BUGS
-The find -
-.IR f
-- command will sometimes fail. There is currently no known workaround.
+The find command will sometimes fail. There is currently no known workaround.
