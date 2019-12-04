@@ -22,10 +22,10 @@ void edit_line(WINDOW *window, std::vector<std::string> &textlines);
 void delete_line(WINDOW *window, std::vector<std::string> &textlines);
 void delete_all(WINDOW *window, std::vector<std::string> &textlines);
 void find_text(WINDOW *window, std::vector<std::string> &textlines);
-std::vector<std::string> get_lines(const std::string &current_fname);
-int save_lines(const std::vector<std::string> &textlines, const std::string &current_fname);
+auto get_lines(const std::string &current_fname) -> std::vector<std::string>;
+auto save_lines(const std::vector<std::string> &textlines, const std::string &current_fname) -> int;
 
 // general
-int string_lnum(char *string, WINDOW *window, int y, int x, int max);
+auto string_lnum(char *string, WINDOW *window, int y, int x, int max) -> int;
 
 #endif

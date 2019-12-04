@@ -9,7 +9,7 @@
 using namespace lineeditor;
 
 /// Program entry point
-int main(int argc, char *argv[]) {
+auto main(int argc, char *argv[]) -> int {
     using namespace std;
     WINDOW *windows[3];
     PANEL *panels[3];
@@ -60,9 +60,8 @@ int main(int argc, char *argv[]) {
     box(windows[1], 0, 0);
 
     // attach panels
-    panels[0] = new_panel(windows[0]);
-    panels[1] = new_panel(windows[1]);
-    panels[2] = new_panel(windows[2]);
+    for (unsigned int i = 0; i < sizeof(panels) / sizeof(*panels); ++i)
+        panels[i] = new_panel(windows[i]);
     update_panels();
 
     init_sbar(filename);
