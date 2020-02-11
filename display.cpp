@@ -64,7 +64,7 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines) {
             mvprintw(loc, 1, stream.str().c_str());
             attroff(COLOR_PAIR(2));
 
-            mvprintw(loc, stream.str().length() + 1, lines[i].c_str());
+            mvprintw(loc, static_cast<int>(stream.str().length() + 1), lines[i].c_str());
             ++loc;
         }
         wrefresh(window);
