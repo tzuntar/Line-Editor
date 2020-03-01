@@ -11,12 +11,16 @@ Line Editor.
 
 ## Compiling
 
-Use the supplied Makefile to compile the program against required
-libraries by running `make` (or `make run` if you also
-want to run the program after compilation).
+To compile the program, just run `make`. You can also run `make
+run` to automatically start the program afterwards.
 
-After the compilation is done, you can run the editor with
-`./lineedit filename`
+When the compilation is done, you can start the editor with
+`./lineedit filename` (supply an inexisting filename to create
+a new file).
+
+To install the program  and have it available everywhere,
+just run `sudo make install`. Same for uninstalling it,
+`sudo make uninstall`.
 
 ## Known bugs
 
