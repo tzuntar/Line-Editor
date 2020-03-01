@@ -71,6 +71,41 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines) {
     }
 }
 
+// TODO: reuse parts from the other print_listing
+void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int marked) {
+    wmove(window, 1, 1);
+    int loc = 1;
+
+    clr_window(window);
+    for (unsigned long i = 0; i < lines.size(); ++i) {
+        if (loc == LINES - 8) {   // we are at the end of the screen
+            attron(A_REVERSE | COLOR_PAIR(1));
+            mvprintw(LINES - 8, 1, "> Press any key <");
+            attroff(A_REVERSE | COLOR_PAIR(1));
+            getch();
+            clr_window(window);
+
+            loc = 1;    // reset location
+            --i;
+        } else {    // not at the end yet, print the next line
+            std::stringstream ss;
+            ss << "[" << i + 1 << "] ";
+            if (i == marked) {
+                attron(COLOR_PAIR(4));
+                mvprintw(loc, 1, ss.str().c_str());
+                attroff(COLOR_PAIR(4));
+            } else {
+                attron(COLOR_PAIR(2));
+                mvprintw(loc, 1, ss.str().c_str());
+                attroff(COLOR_PAIR(2));
+            }
+            mvprintw(loc, static_cast<int>(ss.str().length() + 1), lines[i].c_str());
+            ++loc;
+        }
+        wrefresh(window);
+    }
+}
+
 /// Print the in-program help to the window on specified location
 void print_help(WINDOW *window, int y, int x) {
     std::stringstream stream;

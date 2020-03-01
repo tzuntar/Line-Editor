@@ -27,5 +27,6 @@ auto save_lines(const std::vector<std::string> &textlines, const std::string &cu
 
 // general
 auto string_lnum(char *string, WINDOW *window, int y, int x, int max) -> int;
+int find_string(const std::vector<std::string> &textlines, const std::string &query);
 
 #endif

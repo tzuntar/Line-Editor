@@ -130,7 +130,6 @@ void delete_all(WINDOW *window, std::vector<std::string> &textlines) {
 }
 
 /// Find a string in the file
-/// TODO: not working properly
 void find_text(WINDOW *window, std::vector<std::string> &textlines) {
     char *text = new char[1024];
     clr_window(window);
@@ -143,12 +142,13 @@ void find_text(WINDOW *window, std::vector<std::string> &textlines) {
     wgetstr(window, text);
     noecho();
 
-    // do the processing
+    // look for the text and mark the line where it's found
     wmove(window, 2, 0);
-    if (std::find(textlines.begin(), textlines.end(), text) != textlines.end())
-        print_wb(window, "\n > The specified text has been found in file.");
-    else
-        print_wb(window, "\n > The specified text hasn't been found in file.");
+    int line = find_string(textlines, text);
+    if (line == -1)
+        print_wb(window, "\n > The specified text hasn't been found.");
+    else print_listing(window, textlines, line);
+
     delete[] text;
 }
 
@@ -198,4 +198,17 @@ auto string_lnum(char *string, WINDOW *window, int y, int x, int max) -> int {
         print_error(window, "* ERROR: invalid line number.", y, x + 1);
         return -1;
     } else return num;
+}
+
+/// Attempt to find the selected text in the string vector.
+/// Return the number of the line on which the text was found or -1
+/// if the text wasn't found.
+/// Parameters:
+///     const vector<string>& the string vector
+///     const string&         the text to look for
+int find_string(const std::vector<std::string> &textlines, const std::string &query) {
+    for (int i = 0; i < textlines.size(); i++)
+        if (textlines.at(i).find(query) != std::string::npos)
+            return i;
+    return -1;
 }
