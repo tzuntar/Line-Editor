@@ -3,35 +3,41 @@
 // ------------------------------------
 // editing.cpp - editor routines
 // Thu 2019-07-25
+#include <cstring>
 #include "editing.hpp"
 
 /// Append a line to the end of the file
 void append_line(WINDOW *window, std::vector<std::string> &textlines) {
     std::stringstream output;
-    char *text = new char[2048];
     unsigned int num = textlines.size() + 1;
 
     // print the prompt and last line
     clr_window(window);
-    output << std::endl << " * Enter text to append:" << std::endl
+    output << std::endl << " * Enter text to append (insert . [period] to end):" << std::endl
            << " [" << num - 1 << "] " << textlines[num - 2] << std::endl;
     wmove(window, 0, 0);
     print_wb(window, output.str().c_str());
-    output.str("");
 
     // print the input line
-    output << " [" << num << "] ";
-    wmove(window, 3, 0);
-    print_wb(window, output.str().c_str());
+    int current = 3;
+    char *text = new char[2048];
+    while (strcmp(text, ".") != 0) {
+        output.str(""); // very important!
+        output << " [" << num << "] ";
+        wmove(window, current, 0);
+        print_wb(window, output.str().c_str());
 
-    // get the input
-    echo();
-    wmove(window, 3, output.str().length());
-    wgetstr(window, text);
-    noecho();
+        // get the input
+        echo();
+        wmove(window, current, output.str().length());
+        wgetstr(window, text);
+        noecho();
 
-    // finish up
-    textlines.emplace_back(text);
+        // finish up
+        textlines.emplace_back(text);
+        current++;
+        num++;
+    }
     delete[] text;
 }
 
