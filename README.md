@@ -1,11 +1,11 @@
 # Line Editor
 
-This folder contains the source code for a CLI text editor called
+This repository contains the source code for a CLI text editor called
 Line Editor.
 
 ## Requirements
 
- - Working C++ compiler, preferably g++, `make`
+ - Working C++ compiler (preferably g++), `make`
  - Ncurses and its panels library
  - Terminal with color support
 
