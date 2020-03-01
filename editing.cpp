@@ -38,6 +38,11 @@ void append_line(WINDOW *window, std::vector<std::string> &textlines) {
         current++;
         num++;
     }
+
+    // delete the last line that contains a period
+    textlines.erase(textlines.begin() + (num - 1));
+    if (textlines.empty()) textlines.emplace_back("");  // in case it's a blank file
+
     delete[] text;
 }
 
