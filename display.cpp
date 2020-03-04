@@ -106,7 +106,7 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int
     }
 }
 
-/// Print the in-program help to the window on specified location
+/// Print the in-program help to the window at the specified location
 void print_help(WINDOW *window, int y, int x) {
     std::stringstream stream;
     wmove(window, y, x);
