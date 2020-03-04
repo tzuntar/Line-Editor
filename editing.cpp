@@ -3,7 +3,6 @@
 // ------------------------------------
 // editing.cpp - editor routines
 // Thu 2019-07-25
-#include <cstring>
 #include "editing.hpp"
 
 /// Append a line to the end of the file

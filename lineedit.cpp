@@ -73,10 +73,9 @@ void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile) {
 
 /// The main command loop
 void loop(WINDOW** windows, TextFile& textFile) {
-    using namespace std;
     bool exit = false;
     WINDOW *mainwin = windows[0], *cmdwin = windows[1];
-    stringstream stream;
+    std::stringstream stream;
 
     while (!exit) {
         // reinitialize the command and main window
@@ -239,7 +238,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
 
     // clean up and exit
     endwin();
-    cout << "* Exiting." << endl;
+    std::cout << "* Exiting." << std::endl;
 }
 
 /// Print all the text in the file with line numbers at the left

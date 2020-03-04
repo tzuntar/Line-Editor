@@ -30,12 +30,12 @@ public:
 
     /// Set the lines
     void set_lines(std::vector<std::string> new_lines) {
-        lines = new_lines;
+        lines = std::move(new_lines);
     }
 
     /// Set the filename
     void set_fname(std::string fname) {
-        filename = fname;
+        filename = std::move(fname);
     }
 
     /// Get the lines

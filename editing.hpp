@@ -6,6 +6,7 @@
 #ifndef editing_hpp
 #define editing_hpp
 
+#include <cstring>
 #include <string>
 #include <sstream>
 #include <iostream>
