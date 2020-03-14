@@ -163,7 +163,7 @@ void find_text(WINDOW *window, std::vector<std::string> &textlines) {
 }
 
 /// Get lines from a text file
-auto get_lines(const std::string &current_fname) -> std::vector<std::string> {
+std::vector<std::string> get_lines(const std::string &current_fname) {
     std::vector<std::string> contents;
     std::ifstream file(current_fname);
     if (file.is_open()) { // get the lines
@@ -178,7 +178,7 @@ auto get_lines(const std::string &current_fname) -> std::vector<std::string> {
 }
 
 /// Save lines to the file
-auto save_lines(const std::vector<std::string> &textlines, const std::string &current_fname) -> int {
+int save_lines(const std::vector<std::string> &textlines, const std::string &current_fname) {
     std::ofstream file(current_fname);
     if (file.is_open()) {
         for (const auto &line : textlines)
@@ -199,7 +199,7 @@ auto save_lines(const std::vector<std::string> &textlines, const std::string &cu
 ///     WINDOW*  window to print the errors to
 ///     int x, y error message coordinates
 ///     int max  the number of lines
-auto string_lnum(char *string, WINDOW *window, int y, int x, int max) -> int {
+int string_lnum(char *string, WINDOW *window, int y, int x, int max) {
     std::stringstream intstream(string);
     int num;
     intstream >> num;

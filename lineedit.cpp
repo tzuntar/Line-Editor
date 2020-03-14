@@ -68,7 +68,6 @@ void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile) {
 
     init_sbar(textFile.get_fname());
     print_listing(windows[0], textFile.get_lines());
-
 }
 
 /// The main command loop
