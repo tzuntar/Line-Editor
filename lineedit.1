@@ -1,6 +1,6 @@
 .\" Line Editor manpage
-.\" (feel free to improve it if you have some time)
-.TH lineedit 1 "2019-07-25" "1.2" "Line Editor Manual"
+.\" (feel free to improve it if you want)
+.TH lineedit 1 "2020-04-11" "1.2" "Line Editor Manual"
 .SH NAME
 lineedit \- edit text files, one line at the time
 .SH SYNOPSIS
@@ -12,24 +12,36 @@ lineedit \- edit text files, one line at the time
 is a simple terminal-based text editor (using the `curses' library) which is
 designed to edit one line at the time. When the program is run, the specified
 file is read and listed (you can create new files by supplying a new filename).
-The user can then enter a command.
-.PP
-If you're creating a
-new file, start by appending new lines (the
+.SH USAGE
+When creating a new file, start by appending lines (the
 .IR a
 command). List of commands can be retrieved at any moment by typing a question mark.
 .PP
-When using line-specific commands, the user will usually be prompted to enter a line
-number first. Make sure to enter only numbers (without dots, commas, spaces, etc.)
-otherwise the command will fail. When you're done with editing, you can save the file
+When using any line-specific commands, you will will be prompted to enter the line
+number. Make sure to enter only numbers (without dots, commas, spaces, etc.)
+otherwise the command might fail. When you're done with editing, you can save the file
 and quit the editor with the
 .IR x
-command.
-.PP
-If you're in the middle of editing and suddenly want to save the text to another file,
-use the
-.IR r
-command and supply a new filename.
+command. Here's the full list of commands you can use:
+
+.TS
+tab(;) allbox;
+l,al.
+ COMMAND;DESCRIPTION
+l;display full file listing
+a;append text to the end of the file
+e;edit a specific line
+f;find text in the file
+d;delete a specific line
+\\;delete all lines (irreversible!)
+o;open another file (and discard changes)
+w;write changes to the file (save)
+r;write changes to another file (save as)
+x;write changes to the file and exit
+q;quit without saving changes
+?;display help
+.TE
+
 .PP
 If the
 .B -l
@@ -37,6 +49,11 @@ or
 .B --list
 parameter is supplied, the line editor will just print all text in the file with
 line numbers at the left (similar to the internal
-.IR
-l
+.IR l
 command) and quit.
+.SH KNOWN BUGS
+.IP \[bu] 2
+Entering line numbers that consist of more than 10 numerals may result in undefined
+behavior
+.IP \[bu] 2
+There are currently some hardcoded limits on the line length when appending lines
