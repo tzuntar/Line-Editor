@@ -3,6 +3,7 @@
 // ------------------------------------
 // display.cpp - output management
 // Thu 2019-07-25
+#include "lineedit.hpp"
 #include "display.hpp"
 
 /// Clear the specified window
@@ -107,38 +108,38 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int
 }
 
 /// Print the in-program help to the window at the specified location
-void print_help(WINDOW *window, int y, int x) {
-    std::stringstream stream;
-    wmove(window, y, x);
-    stream << " * Line Editor Help" << std::endl
-           << " ----------------------------------------------------" << std::endl
-           << "   A V A I L A B L E        C O M M A N D S" << std::endl
-           << " ----------------------------------------------------" << std::endl
-           << " l - display full file listing" << std::endl
-           << " a - append text to the end of the file" << std::endl
-           << " e - edit a specific line" << std::endl
-           << " f - find text in file" << std::endl
-           << " d - delete a specific line" << std::endl
-           << " \\ - delete all lines (irreversible!)" << std::endl
-           << " o - open another file (discards current changes)" << std::endl
-           << " w - write changes to file (save)" << std::endl
-           << " r - write changes to another file (save as)" << std::endl
-           << " x - write changes to file and exit" << std::endl
-           << " q - exit without saving changes" << std::endl
-           << " ? - display this page" << std::endl
-           << " ----------------------------------------------------" << std::endl
-           << " Line Editor v1.2 by RedCreator37" << std::endl
-           << " WARNING: This program is distributed \"as is\" and" << std::endl
-           << "          comes without warranty of any kind! You" << std::endl
-           << "          are using it at your own risk!";
-    wprintw(window, stream.str().c_str());
+void print_help(WINDOW *window) {
+    std::vector<std::string> help;  // vvv + 1 space on the left because of the number column
+    help.emplace_back("  * Line Editor Help                           General");
+    help.emplace_back("  ----------------------------------------------------");
+    help.emplace_back("    A V A I L A B L E        C O M M A N D S");
+    help.emplace_back("  ----------------------------------------------------");
+    help.emplace_back("  l - display the full file listing");
+    help.emplace_back("  a - append text to the end of the file");
+    help.emplace_back("  e - edit a specific line");
+    help.emplace_back("  f - find text in the file");
+    help.emplace_back("  d - delete a specific line");
+    help.emplace_back(" \\ - delete all lines (irreversible!)");
+    help.emplace_back(" o - open another file (discards current changes)");
+    help.emplace_back(" w - write changes to the file (save)");
+    help.emplace_back(" r - write changes to another file (save as)");
+    help.emplace_back(" x - write changes to the file and exit");
+    help.emplace_back(" q - exit without saving changes");
+    help.emplace_back(" ? - display this page");
+    help.emplace_back(" ----------------------------------------------------");
+    help.emplace_back(TextFile::get_version());
+    help.emplace_back(" WARNING: This program is distributed \"as is\" and");
+    help.emplace_back("          comes without warranty of any kind. You");
+    help.emplace_back("          are using it at your own risk!");
+    help.emplace_back(" ----------------------------------------------------");
+    print_listing(window, help);
 }
 
 /// Display the status bar on the screen
 void init_sbar(const std::string &filename) {
     std::stringstream statusbar;
-    std::string text = "Line Editor v1.2 by RedCreator37";
-    unsigned int offset = text.length() + 6 + filename.length() + statusbar.str().length();
+    unsigned int offset = TextFile::get_version().length() + 6 + filename.length()
+        + statusbar.str().length();
 
     statusbar << "File: " << filename;
     attron(A_BOLD | COLOR_PAIR(3));
@@ -146,6 +147,6 @@ void init_sbar(const std::string &filename) {
 
     // fill the status bar with spaces to make it fully colored
     for (unsigned int i = 0; i < COLS - offset; ++i) printw(" ");
-    printw(text.c_str());
+    printw(TextFile::get_version().c_str());
     attroff(A_BOLD | COLOR_PAIR(3));
 }

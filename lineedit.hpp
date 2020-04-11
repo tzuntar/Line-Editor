@@ -47,6 +47,10 @@ public:
     std::string& get_fname() {
         return filename;
     }
+
+    static const std::string get_version() {
+        return std::string("Line Editor v1.2 by RedCreator37");
+    }
 };
 
 void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile);

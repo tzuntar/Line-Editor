@@ -24,7 +24,7 @@ just run `sudo make install`. Same for uninstalling it,
 
 ## Known bugs
 
- - There are currently some artificial line size limitations
+ - There are currently some artificial line number size limitations
 
 ## Screenshot
 

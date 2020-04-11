@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
         cout << endl << "* No file specified." << endl;
         return 1;
     } else {
-        cout << endl << "* Line Editor v1.2 by RedCreator37" << endl
+        cout << endl << "* " << TextFile::get_version() << endl
              << "* Loading file " << filename << endl << endl;
     }
 
@@ -94,7 +94,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
         print_refresh(cmdwin, &ch);
         wmove(mainwin, 1, 1);
 
-        switch (ch) {
+        switch (tolower(ch)) {
             case 'l': // full listing of the file
                 print_listing(mainwin, textFile.get_lines());
                 break;
@@ -121,7 +121,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
 
             case '?': // display help
                 clr_window(mainwin);
-                print_help(mainwin, 1, 0);
+                print_help(mainwin);
                 box(mainwin, 0, 0);
                 wrefresh(mainwin);
                 break;
@@ -167,7 +167,8 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
                 stream << "* Saved to file " << textFile.get_fname();
-                for (unsigned int i = 0; i < textFile.get_fname().length() + 2; ++i) stream << " ";
+                for (unsigned int i = 0; i < textFile.get_fname().length() + 2; ++i)
+                    stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
                 wrefresh(mainwin);
@@ -205,7 +206,8 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
                 stream << "* Saved to file " << textFile.get_fname();
-                for (unsigned int i = 0; i < textFile.get_fname().length() + 2; ++i) stream << " ";
+                for (unsigned int i = 0; i < textFile.get_fname().length() + 2; ++i)
+                    stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
                 init_sbar(textFile.get_fname());
@@ -240,7 +242,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
     std::cout << "* Exiting." << std::endl;
 }
 
-/// Print all the text in the file with line numbers at the left
+/// Print all text in the file with line numbers on the left
 /// to the standard output
 void quick_listing(const std::string &fname) {
     std::vector<std::string> text;
