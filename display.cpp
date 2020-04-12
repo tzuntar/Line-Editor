@@ -127,7 +127,7 @@ void print_help(WINDOW *window) {
     help.emplace_back(" q - exit without saving changes");
     help.emplace_back(" ? - display this page");
     help.emplace_back(" ----------------------------------------------------");
-    help.emplace_back(TextFile::get_version());
+    help.emplace_back(" " + TextFile::get_version());
     help.emplace_back(" WARNING: This program is distributed \"as is\" and");
     help.emplace_back("          comes without warranty of any kind. You");
     help.emplace_back("          are using it at your own risk!");
