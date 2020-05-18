@@ -14,7 +14,7 @@ ifeq ($(MANPATH),)
 	MANPATH := $(PREFIX)/share/man/man1
 endif
 
-.PHONY: run clean $(PROGRAMNAME) all install remove
+.PHONY: run clean $(PROGRAMNAME) all install uninstall
 
 all: $(PROGRAMNAME)
 

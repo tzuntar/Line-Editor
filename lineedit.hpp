@@ -48,7 +48,7 @@ public:
         return filename;
     }
 
-    static const std::string get_version() {
+    static std::string get_version() {
         return std::string("Line Editor v1.2 by RedCreator37");
     }
 };

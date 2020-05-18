@@ -18,8 +18,7 @@ When the compilation is done, you can start the editor with
 `./lineedit filename` (supply an inexisting filename to create
 a new file).
 
-To install the program  and have it available everywhere,
-just run `sudo make install`. Same for uninstalling it,
+To install the program  and have it available everywhere, run `sudo make install`. Same for uninstalling it,
 `sudo make uninstall`.
 
 ## Known bugs

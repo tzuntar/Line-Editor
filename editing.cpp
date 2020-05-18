@@ -201,7 +201,7 @@ int save_lines(const std::vector<std::string> &textlines, const std::string &cur
 ///     int max  the number of lines
 int string_lnum(char *string, WINDOW *window, int y, int x, int max) {
     std::stringstream intstream(string);
-    int num;
+    int num = 0;
     intstream >> num;
 
     if (intstream.fail() || num < 1 || num > max) {
