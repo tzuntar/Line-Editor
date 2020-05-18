@@ -6,33 +6,33 @@
 #include "lineedit.hpp"
 #include "display.hpp"
 
-/// Clear the specified window
+/// Clears this window
 void clr_window(WINDOW *window) {
     wclear(window);
     box(window, 0, 0);
     wrefresh(window);
 }
 
-/// clear any previous text on the line (with -2 offset)
+/// Clears any previous text on the line (with -2 offset)
 void clr_line(WINDOW *window) {
     for (int i = 0; i < COLS - 2; i++) wprintw(window, " ");
     wrefresh(window);
 }
 
-/// Print the text to a window and redraw its border
+/// Prints the text to this window and redraws its border
 void print_wb(WINDOW *window, const char *text) {
     wprintw(window, text);
     box(window, 0, 0);
     wrefresh(window);
 }
 
-/// Print the text to a window and refresh the window
+/// Prints the text to this window and refreshes it
 void print_refresh(WINDOW *window, const char *text) {
     wprintw(window, text);
     wrefresh(window);
 }
 
-/// Print an error message to a window
+/// Prints an error message to this window
 /// Ints are the coords of the message on the screen
 void print_error(WINDOW *window, const char *text, int y, int x) {
     attron(COLOR_PAIR(4));
@@ -41,7 +41,7 @@ void print_error(WINDOW *window, const char *text, int y, int x) {
     wrefresh(window);
 }
 
-/// Print listing of the current file to a specified window
+/// Prints listing of the current file to this window
 void print_listing(WINDOW *window, std::vector<std::string> &lines) {
     wmove(window, 1, 1);
     int loc = 1;
@@ -72,11 +72,13 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines) {
     }
 }
 
-// TODO: reuse parts from the other print_listing
+/// Prints listing of the current file to this window,
+/// highlighting the specified line
 void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int marked) {
     wmove(window, 1, 1);
     int loc = 1;
 
+    // TODO: reuse parts from the other print_listing
     clr_window(window);
     for (unsigned long i = 0; i < lines.size(); ++i) {
         if (loc == LINES - 8) {   // we are at the end of the screen
@@ -107,7 +109,7 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int
     }
 }
 
-/// Print the in-program help to the window at the specified location
+/// Prints the in-program help to this window
 void print_help(WINDOW *window) {
     std::vector<std::string> help;  // vvv + 1 space on the left because of the number column
     help.emplace_back("  * Line Editor Help                           General");
@@ -135,11 +137,11 @@ void print_help(WINDOW *window) {
     print_listing(window, help);
 }
 
-/// Display the status bar on the screen
+/// Displays the status bar on the screen
 void init_sbar(const std::string &filename) {
     std::stringstream statusbar;
     unsigned int offset = TextFile::get_version().length() + 6 + filename.length()
-        + statusbar.str().length();
+                          + statusbar.str().length();
 
     statusbar << "File: " << filename;
     attron(A_BOLD | COLOR_PAIR(3));

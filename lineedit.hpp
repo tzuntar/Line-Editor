@@ -17,6 +17,7 @@
 #include <panel.h>
 #include "display.hpp"
 
+/// Represents a TextFile object
 class TextFile {
 private:
     std::vector<std::string> lines;
@@ -28,33 +29,36 @@ public:
         filename = std::move(fname);
     }
 
-    /// Set the lines
+    /// Sets the lines
     void set_lines(std::vector<std::string> new_lines) {
         lines = std::move(new_lines);
     }
 
-    /// Set the filename
+    /// Sets the filename
     void set_fname(std::string fname) {
         filename = std::move(fname);
     }
 
-    /// Get the lines
-    std::vector<std::string>& get_lines() {
+    /// Gets the lines
+    std::vector<std::string> &get_lines() {
         return lines;
     }
 
-    /// Get the filename
-    std::string& get_fname() {
+    /// Gets the filename
+    std::string &get_fname() {
         return filename;
     }
 
+    /// Returns the program version string
     static std::string get_version() {
         return std::string("Line Editor v1.2 by RedCreator37");
     }
 };
 
-void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile);
-void loop(WINDOW** windows, TextFile& textFile);
+void initialize(WINDOW **windows, PANEL **panels, TextFile &textFile);
+
+void loop(WINDOW **windows, TextFile &textFile);
+
 void quick_listing(const std::string &fname);
 
 #endif

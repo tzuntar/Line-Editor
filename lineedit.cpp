@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-/// Initialization
+/// Initializes the UI
 void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile) {
     initscr();
     start_color();
@@ -136,7 +136,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 // now print the prompt
                 wmove(cmdwin, 3, 1);
                 wattron(cmdwin, A_BOLD);
-                wprintw(cmdwin, "* Enter file to open: ");
+                wprintw(cmdwin, "* Enter filename to read: ");
                 wmove(cmdwin, 3, 23);
                 echo();
                 wgetstr(cmdwin, newname);
@@ -181,7 +181,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
                 wattron(cmdwin, A_BOLD);
-                wprintw(cmdwin, "* Enter new filename: ");
+                wprintw(cmdwin, "* Enter a new filename: ");
                 wmove(cmdwin, 3, 23);
                 echo();
                 wgetstr(cmdwin, newname);
@@ -194,7 +194,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wmove(cmdwin, 3, 1);
                 clr_line(cmdwin);
                 wmove(cmdwin, 3, 1);
-                wprintw(cmdwin, "* Saving the text...");
+                wprintw(cmdwin, "* Saving the file...");
                 wrefresh(cmdwin);
 
                 save_lines(textFile.get_lines(), textFile.get_fname());
@@ -242,7 +242,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
     std::cout << "* Exiting." << std::endl;
 }
 
-/// Print all text in the file with line numbers on the left
+/// Prints all text in the file with line numbers on the left
 /// to the standard output
 void quick_listing(const std::string &fname) {
     std::vector<std::string> text;
