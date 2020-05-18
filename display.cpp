@@ -4,7 +4,6 @@
 // display.cpp - output management
 // Thu 2019-07-25
 #include "lineedit.hpp"
-#include "display.hpp"
 
 /// Clears this window
 void clr_window(WINDOW *window) {
@@ -20,7 +19,7 @@ void clr_line(WINDOW *window) {
 }
 
 /// Prints the text to this window and redraws its border
-void print_wb(WINDOW *window, const char *text) {
+void print_border(WINDOW *window, const char *text) {
     wprintw(window, text);
     box(window, 0, 0);
     wrefresh(window);
@@ -138,7 +137,7 @@ void print_help(WINDOW *window) {
 }
 
 /// Displays the status bar on the screen
-void init_sbar(const std::string &filename) {
+void init_statusbar(const std::string &filename) {
     std::stringstream statusbar;
     unsigned int offset = TextFile::get_version().length() + 6 + filename.length()
                           + statusbar.str().length();

@@ -16,7 +16,7 @@ void clr_window(WINDOW *window);
 
 void clr_line(WINDOW *window);
 
-void print_wb(WINDOW *window, const char *text);
+void print_border(WINDOW *window, const char *text);
 
 void print_refresh(WINDOW *window, const char *text);
 
@@ -28,6 +28,6 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int
 
 void print_help(WINDOW *window);
 
-void init_sbar(const std::string &filename);
+void init_statusbar(const std::string &filename);
 
 #endif

@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     }
 
     // normal entry point
-    std::string filename;
+    string filename;
     if (argc < 2) {
         cout << "* Enter filename: ";
         cin >> filename;
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
 }
 
 /// Initializes the UI
-void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile) {
+void initialize(WINDOW **windows, PANEL **panels, TextFile &file) {
     initscr();
     start_color();
     cbreak();
@@ -49,7 +49,7 @@ void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile) {
     // colors
     init_pair(1, COLOR_CYAN, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_WHITE, COLOR_BLUE);  // inversed white on blue
+    init_pair(3, COLOR_WHITE, COLOR_BLUE);  // inverted white on blue
     init_pair(4, COLOR_RED, COLOR_BLACK);   // used for error messages
 
     // create windows for panels
@@ -66,12 +66,12 @@ void initialize(WINDOW** windows, PANEL** panels, TextFile& textFile) {
         panels[i] = new_panel(windows[i]);
     update_panels();
 
-    init_sbar(textFile.get_fname());
-    print_listing(windows[0], textFile.get_lines());
+    init_statusbar(file.get_fname());
+    print_listing(windows[0], file.get_lines());
 }
 
 /// The main command loop
-void loop(WINDOW** windows, TextFile& textFile) {
+void loop(WINDOW **windows, TextFile &file) {
     bool exit = false;
     WINDOW *mainwin = windows[0], *cmdwin = windows[1];
     std::stringstream stream;
@@ -96,27 +96,27 @@ void loop(WINDOW** windows, TextFile& textFile) {
 
         switch (tolower(ch)) {
             case 'l': // full listing of the file
-                print_listing(mainwin, textFile.get_lines());
+                print_listing(mainwin, file.get_lines());
                 break;
 
             case 'a': // append to the end of the file
-                append_line(mainwin, textFile.get_lines());
+                append_line(mainwin, file.get_lines());
                 break;
 
             case 'e': // edit a line
-                edit_line(mainwin, textFile.get_lines());
+                edit_line(mainwin, file.get_lines());
                 break;
 
             case 'f': // find text in file
-                find_text(mainwin, textFile.get_lines());
+                find_text(mainwin, file.get_lines());
                 break;
 
             case 'd': // delete a line
-                delete_line(mainwin, textFile.get_lines());
+                delete_line(mainwin, file.get_lines());
                 break;
 
             case '\\': // delete all lines
-                delete_all(mainwin, textFile.get_lines());
+                delete_all(mainwin, file.get_lines());
                 break;
 
             case '?': // display help
@@ -143,11 +143,11 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 noecho();
                 wattroff(cmdwin, A_BOLD);
 
-                textFile.set_fname(newname);
+                file.set_fname(newname);
                 delete[] newname;
-                textFile.set_lines(get_lines(textFile.get_fname()));
-                init_sbar(textFile.get_fname());
-                print_listing(mainwin, textFile.get_lines());
+                file.set_lines(get_lines(file.get_fname()));
+                init_statusbar(file.get_fname());
+                print_listing(mainwin, file.get_lines());
                 break;
             }
 
@@ -158,7 +158,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wprintw(cmdwin, "* Saving changes...");
                 wrefresh(cmdwin);
 
-                save_lines(textFile.get_lines(), textFile.get_fname());
+                save_lines(file.get_lines(), file.get_fname());
 
                 // update command window status
                 wmove(cmdwin, 3, 1);
@@ -166,8 +166,8 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wmove(cmdwin, 3, 1);
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
-                stream << "* Saved to file " << textFile.get_fname();
-                for (unsigned int i = 0; i < textFile.get_fname().length() + 2; ++i)
+                stream << "* Saved to file " << file.get_fname();
+                for (unsigned int i = 0; i < file.get_fname().length() + 2; ++i)
                     stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
@@ -188,7 +188,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 noecho();
                 wattroff(cmdwin, A_BOLD);
 
-                textFile.set_fname(newname);
+                file.set_fname(newname);
 
                 // save text to the specified file
                 wmove(cmdwin, 3, 1);
@@ -197,7 +197,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wprintw(cmdwin, "* Saving the file...");
                 wrefresh(cmdwin);
 
-                save_lines(textFile.get_lines(), textFile.get_fname());
+                save_lines(file.get_lines(), file.get_fname());
 
                 // update command window status
                 wmove(cmdwin, 3, 1);
@@ -205,12 +205,12 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wmove(cmdwin, 3, 1);
                 wattrset(cmdwin, COLOR_PAIR(2));
                 wattron(cmdwin, A_BOLD);
-                stream << "* Saved to file " << textFile.get_fname();
-                for (unsigned int i = 0; i < textFile.get_fname().length() + 2; ++i)
+                stream << "* Saved to file " << file.get_fname();
+                for (unsigned int i = 0; i < file.get_fname().length() + 2; ++i)
                     stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
-                init_sbar(textFile.get_fname());
+                init_statusbar(file.get_fname());
                 wrefresh(mainwin);
 
                 delete[] newname;
@@ -224,7 +224,7 @@ void loop(WINDOW** windows, TextFile& textFile) {
                 wprintw(cmdwin, "* Saving changes...");
                 wrefresh(cmdwin);
 
-                save_lines(textFile.get_lines(), textFile.get_fname());
+                save_lines(file.get_lines(), file.get_fname());
                 exit = true;
                 break;
 
@@ -244,9 +244,9 @@ void loop(WINDOW** windows, TextFile& textFile) {
 
 /// Prints all text in the file with line numbers on the left
 /// to the standard output
-void quick_listing(const std::string &fname) {
+void quick_listing(const std::string &filename) {
     std::vector<std::string> text;
-    std::ifstream file(fname);
+    std::ifstream file(filename);
 
     if (file.is_open()) { // get the text
         std::string line;

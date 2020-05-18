@@ -18,23 +18,23 @@
 #include "display.hpp"
 
 // editing
-void append_line(WINDOW *window, std::vector<std::string> &textlines);
+void append_line(WINDOW *window, std::vector<std::string> &lines);
 
-void edit_line(WINDOW *window, std::vector<std::string> &textlines);
+void edit_line(WINDOW *window, std::vector<std::string> &lines);
 
-void delete_line(WINDOW *window, std::vector<std::string> &textlines);
+void delete_line(WINDOW *window, std::vector<std::string> &lines);
 
-void delete_all(WINDOW *window, std::vector<std::string> &textlines);
+void delete_all(WINDOW *window, std::vector<std::string> &lines);
 
-void find_text(WINDOW *window, std::vector<std::string> &textlines);
+void find_text(WINDOW *window, std::vector<std::string> &lines);
 
-std::vector<std::string> get_lines(const std::string &current_fname);
+std::vector<std::string> get_lines(const std::string &filename);
 
-int save_lines(const std::vector<std::string> &textlines, const std::string &current_fname);
+int save_lines(const std::vector<std::string> &lines, const std::string &filename);
 
 // general
-int string_lnum(char *string, WINDOW *window, int y, int x, int max);
+int string_linenum(char *string, WINDOW *window, int y, int x, int max);
 
-int find_string(const std::vector<std::string> &textlines, const std::string &query);
+int find_string(const std::vector<std::string> &lines, const std::string &query);
 
 #endif

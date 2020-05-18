@@ -15,8 +15,8 @@ To compile the program, just run `make`. You can also run `make
 run` to automatically start the program afterwards.
 
 When the compilation is done, you can start the editor with
-`./lineedit filename` (supply an inexisting filename to create
-a new file).
+`./lineedit filename` (supply a new filename to create
+a blank file).
 
 To install the program  and have it available everywhere, run `sudo make install`. Same for uninstalling it,
 `sudo make uninstall`.

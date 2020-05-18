@@ -55,10 +55,10 @@ public:
     }
 };
 
-void initialize(WINDOW **windows, PANEL **panels, TextFile &textFile);
+void initialize(WINDOW **windows, PANEL **panels, TextFile &file);
 
-void loop(WINDOW **windows, TextFile &textFile);
+void loop(WINDOW **windows, TextFile &file);
 
-void quick_listing(const std::string &fname);
+void quick_listing(const std::string &filename);
 
 #endif
