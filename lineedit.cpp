@@ -107,6 +107,10 @@ void loop(WINDOW **windows, TextFile &file) {
                 edit_line(mainwin, file.get_lines());
                 break;
 
+            case 'i': // insert a line
+                insert_line(mainwin, file.get_lines());
+                break;
+
             case 'f': // find text in file
                 find_text(mainwin, file.get_lines());
                 break;

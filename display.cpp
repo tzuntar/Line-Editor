@@ -40,44 +40,12 @@ void print_error(WINDOW *window, const char *text, int y, int x) {
     wrefresh(window);
 }
 
-/// Prints listing of the current file to this window
-void print_listing(WINDOW *window, std::vector<std::string> &lines) {
+/// Prints the listing to the current file
+/// This function is implementation specific, use print_listing instead
+void listing(WINDOW *window, std::vector<std::string> &lines, bool mark, unsigned int line) {
     wmove(window, 1, 1);
     int loc = 1;
 
-    clr_window(window);
-    for (unsigned long i = 0; i < lines.size(); ++i) {
-        if (loc == LINES - 8) {   // we are at the end of the screen
-            attron(A_REVERSE | COLOR_PAIR(1));
-            mvprintw(LINES - 8, 1, "> Press any key <");
-            attroff(A_REVERSE | COLOR_PAIR(1));
-            getch();
-            clr_window(window);
-
-            loc = 1;    // reset location
-            --i;
-        } else {    // not at the end yet, print the next line
-            std::stringstream stream;
-            stream << "[" << i + 1 << "] ";
-
-            attron(COLOR_PAIR(2));
-            mvprintw(loc, 1, stream.str().c_str());
-            attroff(COLOR_PAIR(2));
-
-            mvprintw(loc, static_cast<int>(stream.str().length() + 1), lines[i].c_str());
-            ++loc;
-        }
-        wrefresh(window);
-    }
-}
-
-/// Prints listing of the current file to this window,
-/// highlighting the specified line
-void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int marked) {
-    wmove(window, 1, 1);
-    int loc = 1;
-
-    // TODO: reuse parts from the other print_listing
     clr_window(window);
     for (unsigned long i = 0; i < lines.size(); ++i) {
         if (loc == LINES - 8) {   // we are at the end of the screen
@@ -92,7 +60,7 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int
         } else {    // not at the end yet, print the next line
             std::stringstream ss;
             ss << "[" << i + 1 << "] ";
-            if (i == marked) {
+            if (mark && i == line) {
                 attron(COLOR_PAIR(4));
                 mvprintw(loc, 1, ss.str().c_str());
                 attroff(COLOR_PAIR(4));
@@ -108,6 +76,17 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int
     }
 }
 
+/// Prints listing of the current file to this window
+void print_listing(WINDOW *window, std::vector<std::string> &lines) {
+    listing(window, lines, false, 0);
+}
+
+/// Prints listing of the current file to this window,
+/// highlighting the specified line
+void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int marked) {
+    listing(window, lines, true, marked);
+}
+
 /// Prints the in-program help to this window
 void print_help(WINDOW *window) {
     std::vector<std::string> help;  // vvv + 1 space on the left because of the number column
@@ -118,8 +97,9 @@ void print_help(WINDOW *window) {
     help.emplace_back("  l - display the full file listing");
     help.emplace_back("  a - append text to the end of the file");
     help.emplace_back("  e - edit a specific line");
+    help.emplace_back("  i - insert lines after a specific line");
     help.emplace_back("  f - find text in the file");
-    help.emplace_back("  d - delete a specific line");
+    help.emplace_back(" d - delete a specific line");
     help.emplace_back(" \\ - delete all lines (irreversible!)");
     help.emplace_back(" o - open another file (discards current changes)");
     help.emplace_back(" w - write changes to the file (save)");

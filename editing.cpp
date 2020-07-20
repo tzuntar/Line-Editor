@@ -82,6 +82,67 @@ void edit_line(WINDOW *window, std::vector<std::string> &lines) {
     delete[] linenum;
 }
 
+/// Inserts lines after a specific line
+void insert_line(WINDOW *window, std::vector<std::string> &lines) {
+    char *linenum = new char[10], *text = new char[2048];
+    std::stringstream output;
+
+    // print the first prompt
+    clr_window(window);
+    output << " * After which line to insert? [NUMBERS ONLY!]: ";
+    wmove(window, 1, 0);
+    print_border(window, output.str().c_str());
+
+    // get line number input
+    echo();
+    wmove(window, 1, output.str().length());
+    wgetstr(window, linenum);
+    int num = string_linenum(linenum, window, 3, 0, lines.size());
+
+    if (num > 0) {
+        std::vector<std::string> insert;
+        insert.reserve(lines.size() * 2);
+        for (int i = 0; i < num; i++)
+            insert.emplace_back(lines.at(i));
+
+        clr_window(window);
+        output << std::endl << " * Enter text to insert (insert . [period] to end):"
+               << std::endl << " [" << num - 1 << "] " << lines[num - 2] << std::endl;
+        wmove(window, 0, 0);
+        print_border(window, output.str().c_str());
+
+        // print the input line
+        int current = 3;
+        int original_num = num; // keep the original!
+        while (strcmp(text, ".") != 0) {
+            output.str("");
+            output << " [" << num << "] ";
+            wmove(window, current, 0);
+            print_border(window, output.str().c_str());
+
+            // get the input
+            echo();
+            wmove(window, current, output.str().length());
+            wgetstr(window, text);
+            noecho();
+
+            insert.emplace_back(text);
+            current++;
+            num++;
+        }
+
+        // delete the last line that contains the period
+        insert.erase(insert.begin() + (num - 1));
+        // insert the rest of the lines and replace the vector
+        for (unsigned int i = original_num; i < lines.size(); i++)
+            insert.emplace_back(lines.at(i));
+        lines = insert;
+    }
+
+    delete[] linenum;
+    delete[] text;
+}
+
 /// Deletes the specified line
 void delete_line(WINDOW *window, std::vector<std::string> &lines) {
     char *linenum = new char[10];

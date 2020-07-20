@@ -22,6 +22,8 @@ void append_line(WINDOW *window, std::vector<std::string> &lines);
 
 void edit_line(WINDOW *window, std::vector<std::string> &lines);
 
+void insert_line(WINDOW *window, std::vector<std::string> &lines);
+
 void delete_line(WINDOW *window, std::vector<std::string> &lines);
 
 void delete_all(WINDOW *window, std::vector<std::string> &lines);
