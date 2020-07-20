@@ -120,7 +120,8 @@ void print_help(WINDOW *window) {
 void init_statusbar(const std::string &filename, int num_lines) {
     std::stringstream statusbar;
     unsigned int offset = TextFile::get_version().length() + 6 + filename.length()
-                          + statusbar.str().length() + 9 + (num_lines / 10 + 1);
+                          + statusbar.str().length() + 9
+                          + (std::to_string(num_lines).length());
 
     statusbar << "File: " << filename << " | " << num_lines << " lines";
     attron(A_BOLD | COLOR_PAIR(3));

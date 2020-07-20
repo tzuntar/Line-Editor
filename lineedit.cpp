@@ -77,6 +77,7 @@ void loop(WINDOW **windows, TextFile &file) {
     std::stringstream stream;
 
     while (!exit) {
+        init_statusbar(file.get_fname(), file.get_lines().size());
         // reinitialize the command and main window
         wmove(cmdwin, 1, 1);
         wattrset(cmdwin, A_NORMAL | COLOR_PAIR(1));
@@ -88,7 +89,6 @@ void loop(WINDOW **windows, TextFile &file) {
 
         // reset the string stream
         stream.str("");
-        init_statusbar(file.get_fname(), file.get_lines().size());
 
         // get input and process commands
         char ch = getch();
