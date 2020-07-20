@@ -66,7 +66,7 @@ void initialize(WINDOW **windows, PANEL **panels, TextFile &file) {
         panels[i] = new_panel(windows[i]);
     update_panels();
 
-    init_statusbar(file.get_fname());
+    init_statusbar(file.get_fname(), 0);
     print_listing(windows[0], file.get_lines());
 }
 
@@ -88,6 +88,7 @@ void loop(WINDOW **windows, TextFile &file) {
 
         // reset the string stream
         stream.str("");
+        init_statusbar(file.get_fname(), file.get_lines().size());
 
         // get input and process commands
         char ch = getch();
@@ -107,7 +108,7 @@ void loop(WINDOW **windows, TextFile &file) {
                 edit_line(mainwin, file.get_lines());
                 break;
 
-            case 'i': // insert a line
+            case 'i': // insert lines
                 insert_line(mainwin, file.get_lines());
                 break;
 
@@ -150,7 +151,6 @@ void loop(WINDOW **windows, TextFile &file) {
                 file.set_fname(newname);
                 delete[] newname;
                 file.set_lines(get_lines(file.get_fname()));
-                init_statusbar(file.get_fname());
                 print_listing(mainwin, file.get_lines());
                 break;
             }
@@ -186,7 +186,7 @@ void loop(WINDOW **windows, TextFile &file) {
                 wmove(cmdwin, 3, 1);
                 wattron(cmdwin, A_BOLD);
                 wprintw(cmdwin, "* Enter a new filename: ");
-                wmove(cmdwin, 3, 23);
+                wmove(cmdwin, 3, 25);
                 echo();
                 wgetstr(cmdwin, newname);
                 noecho();
@@ -214,7 +214,6 @@ void loop(WINDOW **windows, TextFile &file) {
                     stream << " ";
                 wprintw(cmdwin, stream.str().c_str());
                 wattroff(cmdwin, A_BOLD);
-                init_statusbar(file.get_fname());
                 wrefresh(mainwin);
 
                 delete[] newname;

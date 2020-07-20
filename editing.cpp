@@ -97,7 +97,7 @@ void insert_line(WINDOW *window, std::vector<std::string> &lines) {
     echo();
     wmove(window, 1, output.str().length());
     wgetstr(window, linenum);
-    int num = string_linenum(linenum, window, 3, 0, lines.size());
+    int num = string_linenum(linenum, window, 3, 0, lines.size()) + 1;
 
     if (num > 0) {
         std::vector<std::string> insert;

@@ -117,12 +117,12 @@ void print_help(WINDOW *window) {
 }
 
 /// Displays the status bar on the screen
-void init_statusbar(const std::string &filename) {
+void init_statusbar(const std::string &filename, int num_lines) {
     std::stringstream statusbar;
     unsigned int offset = TextFile::get_version().length() + 6 + filename.length()
-                          + statusbar.str().length();
+                          + statusbar.str().length() + 9 + (num_lines / 10 + 1);
 
-    statusbar << "File: " << filename;
+    statusbar << "File: " << filename << " | " << num_lines << " lines";
     attron(A_BOLD | COLOR_PAIR(3));
     mvprintw(LINES - 1, 0, statusbar.str().c_str());
 

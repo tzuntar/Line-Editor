@@ -28,6 +28,6 @@ void print_listing(WINDOW *window, std::vector<std::string> &lines, unsigned int
 
 void print_help(WINDOW *window);
 
-void init_statusbar(const std::string &filename);
+void init_statusbar(const std::string &filename, int num_lines);
 
 #endif

@@ -51,7 +51,7 @@ public:
 
     /// Returns the program version string
     static std::string get_version() {
-        return std::string("Line Editor v1.2 by RedCreator37");
+        return std::string("Line Editor v1.2 (c) RedCreator37");
     }
 };
 
