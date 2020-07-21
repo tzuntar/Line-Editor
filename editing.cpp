@@ -38,7 +38,8 @@ void append_line(WINDOW *window, std::vector<std::string> &lines) {
     }
 
     // delete the last line that contains the period
-    lines.erase(lines.begin() + (num - 1));
+    if (strcmp(lines.at(lines.size() - 1).c_str(), ".") == 0)
+        lines.erase(lines.begin() + (num - 1));
     if (lines.empty()) lines.emplace_back("");  // in case it's a blank file
     delete[] text;
 }
