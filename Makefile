@@ -5,7 +5,7 @@ LDFLAGS     := -lpanel -lncurses
 RM          := rm -rf
 PROGRAMNAME := lineedit
 MANPAGENAME := lineedit.1
-SOURCES     := editing.cpp display.cpp lineedit.cpp
+SOURCES     := $(wildcard *.cpp) $(wildcard */*.cpp) $(wildcard **/*.cpp)
 OBJECTS     := $(patsubst %.cpp, %.o, $(SOURCES))
 ifeq ($(PREFIX),)
 	PREFIX  := /usr/local

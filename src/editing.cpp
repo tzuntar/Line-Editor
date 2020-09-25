@@ -19,7 +19,7 @@ void append_line(WINDOW *window, std::vector<std::string> &lines) {
 
     // print the input line
     int current = 3;
-    char *text = new char[2048];
+    char *text = new char[2048]();
     while (strcmp(text, ".") != 0) {
         output.str(""); // very important!
         output << " [" << num << "] ";
@@ -46,7 +46,7 @@ void append_line(WINDOW *window, std::vector<std::string> &lines) {
 
 /// Edits the specific line
 void edit_line(WINDOW *window, std::vector<std::string> &lines) {
-    char *linenum = new char[10], *text = new char[2048];
+    char *linenum = new char[10](), *text = new char[2048]();
     std::stringstream output;
 
     // print the first prompt
@@ -85,7 +85,7 @@ void edit_line(WINDOW *window, std::vector<std::string> &lines) {
 
 /// Inserts lines after a specific line
 void insert_line(WINDOW *window, std::vector<std::string> &lines) {
-    char *linenum = new char[10], *text = new char[2048];
+    char *linenum = new char[10](), *text = new char[2048]();
     std::stringstream output;
 
     // print the first prompt
@@ -146,7 +146,7 @@ void insert_line(WINDOW *window, std::vector<std::string> &lines) {
 
 /// Deletes the specified line
 void delete_line(WINDOW *window, std::vector<std::string> &lines) {
-    char *linenum = new char[10];
+    char *linenum = new char[10]();
     clr_window(window);
     wmove(window, 1, 0);
     print_border(window, " * Enter line number: ");
@@ -198,7 +198,7 @@ void delete_all(WINDOW *window, std::vector<std::string> &lines) {
 
 /// Finds a string in the file
 void find_text(WINDOW *window, std::vector<std::string> &lines) {
-    char *text = new char[1024];
+    char *text = new char[1024]();
     clr_window(window);
     wmove(window, 1, 0);
     print_border(window, " * Enter the text to look for: ");
