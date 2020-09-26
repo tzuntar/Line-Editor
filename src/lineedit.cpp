@@ -132,7 +132,7 @@ void loop(WINDOW **windows, TextFile &file) {
                 break;
 
             case 'o': { // open a file
-                char *newname = new char[256];
+                char *newname = new char[256]();
 
                 // clear any possible text on that line
                 wmove(cmdwin, 3, 1);
@@ -179,7 +179,7 @@ void loop(WINDOW **windows, TextFile &file) {
                 break;
 
             case 'r': { // save to another file
-                char *newname = new char[256];
+                char *newname = new char[256]();
 
                 wmove(cmdwin, 3, 1);
                 clr_line(cmdwin);
