@@ -55,7 +55,7 @@ void listing(WINDOW *window, std::vector<std::string> &lines, bool mark, unsigne
             getch();
             clr_window(window);
 
-            loc = 1;    // reset location
+            loc = 1;    // reset the location
             --i;
         } else {    // not at the end yet, print the next line
             std::stringstream ss;

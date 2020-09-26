@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 project(lineedit)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS "-std=c++11 -Wall -lpanel -lncurses")
+set(CMAKE_CXX_FLAGS "-Wall -lpanel -lncurses")
 
 file(GLOB_RECURSE Line_Editor_Sources
         "src/*.h"
