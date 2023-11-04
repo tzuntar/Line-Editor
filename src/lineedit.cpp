@@ -5,12 +5,12 @@
 // Thu 2019-07-25
 #include "lineedit.hpp"
 #include "editing.hpp"
+#include "display/windows/TextWindow.h"
+#include "display/windows/ConsoleWindow.h"
 
 /// Program entry point
 int main(int argc, char *argv[]) {
     using namespace std;
-    WINDOW *windows[3];
-    PANEL *panels[3];
 
     // if the "list" option is specified just print the listing and quit
     if (argc == 3 && (strcmp(argv[2], "-l") == 0 || strcmp(argv[2], "--list") == 0)) {
@@ -26,49 +26,44 @@ int main(int argc, char *argv[]) {
     } else filename = argv[1];
 
     if (filename.empty()) {
-        cout << endl << "* No file specified." << endl;
+        cout << endl << "* No file specified. Exiting." << endl;
         return 1;
-    } else {
-        cout << endl << "* " << TextFile::get_version() << endl
-             << "* Loading file " << filename << endl << endl;
     }
 
     TextFile textFile = TextFile(get_lines(filename), filename);
-    initialize(windows, panels, textFile);
-    loop(windows, textFile);
+    Editor::GlobalInit(textFile);
+    Editor::GlobalLoop();
     return 0;
 }
 
-/// Initializes the UI
-void initialize(WINDOW **windows, PANEL **panels, TextFile &file) {
-    initscr();
-    start_color();
-    cbreak();
-    noecho();
+namespace Editor {
 
-    // colors
-    init_pair(1, COLOR_CYAN, COLOR_BLACK);
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);
-    init_pair(3, COLOR_WHITE, COLOR_BLUE);  // inverted white on blue
-    init_pair(4, COLOR_RED, COLOR_BLACK);   // used for error messages
+    void GlobalInit(TextFile &file) {
+        initscr();
+        start_color();
+        cbreak();
+        noecho();
 
-    // create windows for panels
-    windows[0] = newwin(LINES - 6, COLS, 0, 0); // main window
-    windows[1] = newwin(5, COLS, LINES - 6, 0); // command window
-    windows[2] = newwin(1, COLS, LINES, 0);     // status bar
+        // colors
+        init_pair(1, COLOR_CYAN, COLOR_BLACK);
+        init_pair(2, COLOR_GREEN, COLOR_BLACK);
+        init_pair(3, COLOR_WHITE, COLOR_BLUE);  // inverted white on blue
+        init_pair(4, COLOR_RED, COLOR_BLACK);   // used for error messages
 
-    // create window borders
-    box(windows[0], 0, 0);
-    box(windows[1], 0, 0);
+        auto editorWindow = new TextWindow({LINES - 6, COLS}, {0, 0});
+        auto consoleWindow = new ConsoleWindow({5, COLS}, {LINES - 6, 0});
+        activeWindows[0] = editorWindow;
+        activeWindows[1] = consoleWindow;
 
-    // attach panels
-    for (unsigned int i = 0; i < sizeof(panels) / sizeof(*panels); ++i)
-        panels[i] = new_panel(windows[i]);
-    update_panels();
+        // init_statusbar(file.get_fname(), 0);
+        // print_listing(windows[0], file.get_lines());
+    }
 
-    init_statusbar(file.get_fname(), 0);
-    print_listing(windows[0], file.get_lines());
-}
+    void GlobalLoop() {
+
+    }
+
+}   // !Editor
 
 /// The main command loop
 void loop(WINDOW **windows, TextFile &file) {

@@ -16,6 +16,7 @@
 
 #include <panel.h>
 #include "display.hpp"
+#include "display/Window.h"
 
 /// Represents a TextFile object
 class TextFile {
@@ -48,17 +49,20 @@ public:
     std::string &get_fname() {
         return filename;
     }
-
-    /// Returns the program version string
-    static std::string get_version() {
-        return std::string("Line Editor v1.2 (c) RedCreator37");
-    }
 };
-
-void initialize(WINDOW **windows, PANEL **panels, TextFile &file);
 
 void loop(WINDOW **windows, TextFile &file);
 
 void quick_listing(const std::string &filename);
+
+namespace Editor {
+
+    Window *activeWindows[3];
+
+    void GlobalInit(TextFile &file);
+
+    void GlobalLoop();
+
+}   // !Editor
 
 #endif

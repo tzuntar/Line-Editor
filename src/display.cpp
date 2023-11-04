@@ -108,7 +108,7 @@ void print_help(WINDOW *window) {
     help.emplace_back(" q - exit without saving changes");
     help.emplace_back(" ? - display this page");
     help.emplace_back(" ----------------------------------------------------");
-    help.emplace_back(" " + TextFile::get_version());
+    help.emplace_back(" Line Editor v1.2 (c) RedCreator37");
     help.emplace_back(" WARNING: This program is distributed \"as is\" and");
     help.emplace_back("          comes without warranty of any kind. You");
     help.emplace_back("          are using it at your own risk!");
@@ -119,7 +119,8 @@ void print_help(WINDOW *window) {
 /// Displays the status bar on the screen
 void init_statusbar(const std::string &filename, int num_lines) {
     std::stringstream statusbar;
-    unsigned int offset = TextFile::get_version().length() + 6 + filename.length()
+    std::string version = "Line Editor v1.2 (c) RedCreator37";
+    unsigned int offset = version.length() + 6 + filename.length()
                           + statusbar.str().length() + 9
                           + (std::to_string(num_lines).length());
 
@@ -129,6 +130,6 @@ void init_statusbar(const std::string &filename, int num_lines) {
 
     // fill the status bar with spaces to make it fully colored
     for (unsigned int i = 0; i < COLS - offset; ++i) printw(" ");
-    printw(TextFile::get_version().c_str());
+    printw(version.c_str());
     attroff(A_BOLD | COLOR_PAIR(3));
 }
